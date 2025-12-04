@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Urbanist", "system-ui", "sans-serif"], // ✅ Default font
+      },
+    },
   },
   plugins: [],
 }

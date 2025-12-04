@@ -1,13 +1,37 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>twin</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>twin</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <script>
+    (function () {
+      var KEY = "theme";
+      var saved = localStorage.getItem(KEY);
+      var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      var mode = saved ? saved : (systemDark ? "dark" : "light");
+      document.documentElement.classList.toggle("dark", mode === "dark");
+
+      // Optional: system change auto-apply only if user ne khud choose nahi kiya
+      window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", function (e) {
+          if (!localStorage.getItem(KEY)) {
+            document.documentElement.classList.toggle("dark", e.matches);
+          }
+        });
+    })();
+  </script>
+
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
