@@ -22,11 +22,7 @@ export default function App() {
 
         {/* MAIN CONTENT */}
         <main
-          className="
-            mt-4 rounded-[28px] border border-slate-200/70 bg-white/80 p-6 
-            shadow-[0_30px_80px_-40px_rgba(59,130,246,0.25)] backdrop-blur
-            dark:border-slate-700/60 dark:bg-slate-900/60
-          "
+         
         >
           <Outlet />
         </main>

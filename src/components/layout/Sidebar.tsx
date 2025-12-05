@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Home, Search, Bookmark, FolderClosed, MessageSquare, Settings,
-   Wand2, Handbag, 
+    Handbag, 
    Sparkles} from "lucide-react"; // optional; emojis fallback below
 
 type Item = {
