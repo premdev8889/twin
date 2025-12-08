@@ -49,3 +49,40 @@ html, body{
 @layer base {
   body { background: var(--bg); color: var(--text); }
 }
+
+/* nicer slider thumbs */
+.range-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 9999px;
+  background: #fff;
+  border: 2px solid #60a5fa; /* sky-400 */
+  box-shadow: 0 2px 8px rgba(56,149,255,.25);
+}
+.range-thumb::-moz-range-thumb {
+  width: 16px; height: 16px;
+  border-radius: 9999px;
+  background: #fff;
+  border: 2px solid #60a5fa;
+  box-shadow: 0 2px 8px rgba(56,149,255,.25);
+}
+
+
+/* Hide scrollbar but keep scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Pretty range thumbs (both themes) */
+input[type='range']{
+  -webkit-appearance:none; appearance:none; background:transparent; height:32px;
+}
+input[type='range']::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none;
+  height:16px; width:16px; border-radius:9999px; background:var(--thumb,#3b82f6);
+  border:2px solid #fff; box-shadow:0 0 0 2px rgba(59,130,246,.25);
+}
+input[type='range']::-moz-range-thumb{
+  height:16px; width:16px; border-radius:9999px; background:var(--thumb,#3b82f6);
+  border:2px solid #fff; box-shadow:0 0 0 2px rgba(59,130,246,.25);
+}

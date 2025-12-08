@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import Home from "./pages/Home";
+import Chat from "./pages/Chat";
+import TwinDetailPage from "./pages/TwinDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -11,7 +13,8 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Home /> },
-      // { path: "about", element: <About /> },
+      { path: "chat", element: <Chat /> },
+      { path:"/twin/:slug", element:<TwinDetailPage/> },
     ],
   },
 ]);
