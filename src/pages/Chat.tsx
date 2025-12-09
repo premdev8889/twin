@@ -1,24 +1,21 @@
 // src/pages/AutomationChatPage.tsx
 import { useState } from "react";
-import { Mic, SendHorizontal, Check, X, SquarePen } from "lucide-react";
+import { Mic, SendHorizontal } from "lucide-react";
 import FilterPanel from "../components/sections/chat/FilterPanel";
 import TwinResultCard from "../components/sections/chat/TwinResultCard";
 import { twinsData } from "../data/twinsData";
 
 export default function AutomationChatPage() {
-  const [query, setQuery] = useState(
+  const [val, setVal] = useState(
     "I want to know more about creative things and explore different ideas that can help me understand creativity better."
   );
-  const [val, setVal] = useState("");
   const [messages, setMessages] = useState<string[]>([]);
-  const [editing, setEditing] = useState(false);
-  const [temp, setTemp] = useState(query);
 
   const send = () => {
     const text = val.trim();
     if (!text) return;
     setMessages((m) => [...m, text]);
-    setVal("");
+    setVal(""); // send ke baad input clear
   };
 
   // ---- Filter Chips ----
@@ -71,69 +68,31 @@ export default function AutomationChatPage() {
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
 
-              {/* Search pill */}
+              {/* Search / Composer pill (edit removed) */}
               <div className="mt-4 rounded-2xl bg-white p-2 pl-4 text-slate-800 shadow-inner">
                 <div className="flex items-center gap-2">
-                  {editing ? (
-                    <input
-                      value={temp}
-                      onChange={(e) => setTemp(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          setQuery(temp);
-                          setEditing(false);
-                        }
-                        if (e.key === "Escape") {
-                          setTemp(query);
-                          setEditing(false);
-                        }
-                      }}
-                      autoFocus
-                      className="w-full bg-transparent py-2 outline-none"
-                    />
-                  ) : (
-                    <p className="flex-1 truncate py-2 text-[15px] text-slate-700">
-                      {query}
-                    </p>
-                  )}
+                  <input
+                    value={val}
+                    onChange={(e) => setVal(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") send();
+                    }}
+                    placeholder="Type your message..."
+                    className="w-full bg-transparent py-2 outline-none"
+                  />
 
                   <div className="flex items-center gap-2">
-                    {editing ? (
-                      <>
-                        <button
-                          onClick={() => {
-                            setQuery(temp);
-                            setEditing(false);
-                          }}
-                          className="grid place-items-center rounded-full bg-green-100 p-2"
-                        >
-                          <Check size={16} />
-                        </button>
-                        <button
-                          onClick={() => {
-                            setTemp(query);
-                            setEditing(false);
-                          }}
-                          className="grid place-items-center rounded-full bg-red-100 p-2"
-                        >
-                          <X size={16} />
-                        </button>
-                      </>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          setTemp(query);
-                          setEditing(true);
-                        }}
-                        className="grid place-items-center rounded-full bg-slate-100 p-2"
-                      >
-                        <SquarePen size={16} />
-                      </button>
-                    )}
-                    <button className="grid place-items-center rounded-full bg-slate-100 p-2">
+                    <button
+                      className="grid place-items-center rounded-full bg-slate-100 p-2"
+                      aria-label="Voice input"
+                    >
                       <Mic size={16} />
                     </button>
-                    <button className="grid place-items-center rounded-full bg-gradient-to-tr from-sky-500 to-blue-500 p-2 text-white shadow">
+                    <button
+                      onClick={send}
+                      className="grid place-items-center rounded-full bg-gradient-to-tr from-sky-500 to-blue-500 p-2 text-white shadow"
+                      aria-label="Send message"
+                    >
                       <SendHorizontal size={16} />
                     </button>
                   </div>
@@ -155,7 +114,6 @@ export default function AutomationChatPage() {
                         : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200"
                     }`}
                   >
-                    {/* Label click → select if unselected */}
                     <button
                       onClick={() => !selected && handleSelect(c)}
                       className="outline-none"
@@ -163,7 +121,6 @@ export default function AutomationChatPage() {
                       {c}
                     </button>
 
-                    {/* × button → visible only when selected */}
                     {selected && (
                       <button
                         onClick={(e) => {
@@ -228,30 +185,6 @@ export default function AutomationChatPage() {
                 ))}
               </div>
             )}
-
-            {/* Bottom composer */}
-            <div className="sticky bottom-3">
-              <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_18px_50px_-25px_rgba(59,130,246,0.25)] dark:border-slate-700 dark:bg-slate-900/60">
-                <div className="flex items-center gap-3">
-                  <input
-                    value={val}
-                    onChange={(e) => setVal(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && send()}
-                    placeholder="Ask anything.."
-                    className="w-full bg-transparent py-2.5 text-[15px] outline-none placeholder:text-slate-400"
-                  />
-                  <button className="grid place-items-center rounded-full border border-slate-200 bg-white p-2 shadow-sm dark:border-slate-700 dark:bg-slate-800/70">
-                    <Mic size={18} />
-                  </button>
-                  <button
-                    onClick={send}
-                    className="grid place-items-center rounded-full bg-gradient-to-tr from-sky-500 to-blue-500 p-2 text-white shadow-[0_10px_20px_rgba(56,149,255,.35)]"
-                  >
-                    <SendHorizontal size={18} strokeWidth={2} />
-                  </button>
-                </div>
-              </div>
-            </div>
           </main>
 
           {/* Right filter panel */}

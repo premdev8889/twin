@@ -73,20 +73,75 @@ export default function TwinDetailPage() {
 
   const issues = useMemo(
     () => [
-      { id: "WDI-214", title: "401 Unauthorized on outbound REST", severity: "High", status: "Resolved" },
-      { id: "WDI-198", title: "PECI mismatch for terminated workers", severity: "Medium", status: "In Progress" },
-      { id: "WDI-176", title: "BP step stuck due to security domain", severity: "High", status: "Resolved" },
-      { id: "WDI-151", title: "Connector timeout during bulk run", severity: "Low", status: "Open" },
-      { id: "WDI-139", title: "Certificate nearing expiry", severity: "Medium", status: "Resolved" },
-      { id: "WDI-127", title: "DT map error on nested fields", severity: "Low", status: "Resolved" },
+      {
+        id: "WDI-214",
+        title: "401 Unauthorized on outbound REST",
+        severity: "High",
+        status: "Resolved",
+      },
+      {
+        id: "WDI-198",
+        title: "PECI mismatch for terminated workers",
+        severity: "Medium",
+        status: "In Progress",
+      },
+      {
+        id: "WDI-176",
+        title: "BP step stuck due to security domain",
+        severity: "High",
+        status: "Resolved",
+      },
+      {
+        id: "WDI-151",
+        title: "Connector timeout during bulk run",
+        severity: "Low",
+        status: "Open",
+      },
+      {
+        id: "WDI-139",
+        title: "Certificate nearing expiry",
+        severity: "Medium",
+        status: "Resolved",
+      },
+      {
+        id: "WDI-127",
+        title: "DT map error on nested fields",
+        severity: "Low",
+        status: "Resolved",
+      },
       { id: "WDI-118", title: "403 forbidden on RaaS", severity: "High", status: "Resolved" },
-      { id: "WDI-104", title: "Studio retry policy misconfigured", severity: "Medium", status: "Open" },
-      { id: "WDI-092", title: "Pagination error for EIB export", severity: "Low", status: "Resolved" },
-      { id: "WDI-081", title: "PECI file missing delta rows", severity: "Medium", status: "Resolved" },
-      { id: "WDI-072", title: "Throttling limits exceeded", severity: "High", status: "In Progress" },
+      {
+        id: "WDI-104",
+        title: "Studio retry policy misconfigured",
+        severity: "Medium",
+        status: "Open",
+      },
+      {
+        id: "WDI-092",
+        title: "Pagination error for EIB export",
+        severity: "Low",
+        status: "Resolved",
+      },
+      {
+        id: "WDI-081",
+        title: "PECI file missing delta rows",
+        severity: "Medium",
+        status: "Resolved",
+      },
+      {
+        id: "WDI-072",
+        title: "Throttling limits exceeded",
+        severity: "High",
+        status: "In Progress",
+      },
       { id: "WDI-060", title: "Core Connector mapping gaps", severity: "Low", status: "Resolved" },
       { id: "WDI-051", title: "Studio log rotation too low", severity: "Low", status: "Open" },
-      { id: "WDI-043", title: "Webhook signature validation", severity: "Medium", status: "Resolved" },
+      {
+        id: "WDI-043",
+        title: "Webhook signature validation",
+        severity: "Medium",
+        status: "Resolved",
+      },
       { id: "WDI-036", title: "Test data parity issues", severity: "Low", status: "Resolved" },
       { id: "WDI-028", title: "RCA report template request", severity: "Low", status: "Open" },
     ],
@@ -102,7 +157,9 @@ export default function TwinDetailPage() {
           </Link>
           <div className="mt-6 rounded-[18px] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900/60">
             <h1 className="text-[18px] font-semibold">Twin not found</h1>
-            <p className="mt-1 text-[14px] text-slate-600 dark:text-slate-300">Please go back and try again.</p>
+            <p className="mt-1 text-[14px] text-slate-600 dark:text-slate-300">
+              Please go back and try again.
+            </p>
           </div>
         </div>
       </div>
@@ -115,7 +172,11 @@ export default function TwinDetailPage() {
         {/* HEADER */}
         <div className="flex items-start justify-between rounded-[20px] border border-sky-100 bg-white/80 p-[16px] pb-0 shadow-sm backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/60">
           <div className="flex items-start gap-[14px]">
-            <img src={twin.avatar} className="h-[100px] w-[100px] rounded-[14px] shadow-sm" alt={twin.name} />
+            <img
+              src={twin.productImg}
+              className="h-[100px] w-[100px] rounded-[14px] shadow-sm"
+              alt={twin.name}
+            />
             <div className="pt-[2px]">
               <h1 className="text-[22px] font-semibold leading-[26px]">{twin.role}</h1>
 
@@ -133,19 +194,26 @@ export default function TwinDetailPage() {
 
               {/* sub description */}
               <p className="mt-[10px] max-w-[760px] text-[16px] leading-[26px] text-slate-600 dark:text-slate-300">
-                This Digital Twin is trained on 12+ years of real Workday Integration experience— including Studio,
-                EIBs, PECI, Core Connectors, DT, and REST/SOAP APIs.
+                This Digital Twin is trained on 12+ years of real Workday Integration experience—
+                including Studio, EIBs, PECI, Core Connectors, DT, and REST/SOAP APIs.
               </p>
 
               {/* published by */}
               <div className="flex justify-between">
                 <div className="mt-[10px] inline-flex items-center gap-[8px] text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-slate-500 text-sm">Published by:</span>
-                  <div className="bg-blue-100/30 flex gap-2 py-2 px-3 rounded-full align-center">
-                    <img src={twin.avatar} className="h-6 w-6 rounded-full" alt={twin.publishedBy.name} />
-                    <span className="font-medium text-sm">{twin.publishedBy.name} </span>
+                  <Link
+                    to={`/author/${twin.publishedBy.name.toLowerCase().replace(/\s+/g, "-")}`}
+                    className="bg-blue-100/30 flex gap-2 py-2 px-3 rounded-full align-center hover:bg-blue-200/50 transition"
+                  >
+                    <img
+                      src={twin.avatar}
+                      className="h-6 w-6 rounded-full"
+                      alt={twin.publishedBy.name}
+                    />
+                    <span className="font-medium text-sm">{twin.publishedBy.name}</span>
                     <BadgeCheck size={22} fill="#3084F1" color="#fff" />
-                  </div>
+                  </Link>
                 </div>
               </div>
 
@@ -154,8 +222,18 @@ export default function TwinDetailPage() {
                 <div className="flex items-center gap-[8px]">
                   {[
                     { key: "details" as const, label: "Details", icon: Info },
-                    { key: "comments" as const, label: "Comments", icon: MessageSquare, count: comments.length },
-                    { key: "issues" as const, label: "Issue", icon: AlertTriangle, count: issues.length },
+                    {
+                      key: "comments" as const,
+                      label: "Comments",
+                      icon: MessageSquare,
+                      count: comments.length,
+                    },
+                    {
+                      key: "issues" as const,
+                      label: "Issue",
+                      icon: AlertTriangle,
+                      count: issues.length,
+                    },
                   ].map((t) => {
                     const active = activeTab === t.key;
                     const Icon = t.icon;
@@ -262,8 +340,8 @@ export default function TwinDetailPage() {
                     <li>Release readiness preparation</li>
                   </ul>
                   <p className="mt-[10px] text-sm leading-[22px] text-slate-700 dark:text-slate-300">
-                    It incorporates real client patterns, error logs, test data, and expert-level reasoning to deliver
-                    accurate, production-safe suggestions.
+                    It incorporates real client patterns, error logs, test data, and expert-level
+                    reasoning to deliver accurate, production-safe suggestions.
                   </p>
                 </Card>
               </div>
@@ -274,8 +352,12 @@ export default function TwinDetailPage() {
                 <ul className="divide-y divide-slate-100 dark:divide-slate-800">
                   {comments.map((cmt) => (
                     <li key={cmt.id} className="py-[10px]">
-                      <div className="text-sm font-medium text-slate-800 dark:text-slate-100">{cmt.user}</div>
-                      <div className="mt-[2px] text-sm text-slate-600 dark:text-slate-300">{cmt.text}</div>
+                      <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
+                        {cmt.user}
+                      </div>
+                      <div className="mt-[2px] text-sm text-slate-600 dark:text-slate-300">
+                        {cmt.text}
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -298,8 +380,8 @@ export default function TwinDetailPage() {
                           it.severity === "High"
                             ? "bg-rose-100 text-rose-700"
                             : it.severity === "Medium"
-                            ? "bg-amber-100 text-amber-700"
-                            : "bg-emerald-100 text-emerald-700"
+                              ? "bg-amber-100 text-amber-700"
+                              : "bg-emerald-100 text-emerald-700"
                         }`}
                       >
                         {it.severity}
@@ -314,74 +396,85 @@ export default function TwinDetailPage() {
           {/* RIGHT column (always visible) */}
           <div className="col-span-12 space-y-[14px] lg:col-span-6">
             <div className="bg-white p-8 rounded-2xl">
-                <Card title="About">
-              <p className="text-sm leading-[22px] text-slate-700 dark:text-slate-300">
-                Digital Twin of a Senior Workday Integration Consultant. Trained on real-world projects across banking,
-                retail, utilities, and global HR transformations. Continuously improved with new cases and Workday
-                release updates.
-              </p>
-            </Card>
+              <Card title="About">
+                <p className="text-sm leading-[22px] text-slate-700 dark:text-slate-300">
+                  Digital Twin of a Senior Workday Integration Consultant. Trained on real-world
+                  projects across banking, retail, utilities, and global HR transformations.
+                  Continuously improved with new cases and Workday release updates.
+                </p>
+              </Card>
 
-            <Card title="Last Month Activity">
-              <div className="flex items-end justify-between">
-                <div>
-                  <div className="text-[22px] font-semibold leading-none">
-                    {twin.interactionsLastMonth.toLocaleString()}
+              <Card title="Last Month Activity">
+                <div className="flex items-end justify-between">
+                  <div>
+                    <div className="text-[22px] font-semibold leading-none">
+                      {twin.interactionsLastMonth.toLocaleString()}
+                    </div>
+                    <div className="mt-[4px] text-sm text-slate-500">
+                      (problem analysis, RCA, test generation, step validation)
+                    </div>
                   </div>
-                  <div className="mt-[4px] text-sm text-slate-500">
-                    (problem analysis, RCA, test generation, step validation)
+                  <div className="w-[130px] text-sky-600">
+                    <Sparkline series={twin.activitySeries} />
                   </div>
                 </div>
-                <div className="w-[130px] text-sky-600">
-                  <Sparkline series={twin.activitySeries} />
+              </Card>
+
+              <Card title="Skills & Expertise Tags">
+                <div className="flex flex-wrap gap-[10px]">
+                  {twin.skills.map((s) => (
+                    <span
+                      key={s}
+                      className="rounded-full  bg-blue-100/30 px-[10px] py-[3px] text-[14px] text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200"
+                    >
+                      {s}
+                    </span>
+                  ))}
                 </div>
-              </div>
-            </Card>
+              </Card>
 
-            <Card title="Skills & Expertise Tags">
-              <div className="flex flex-wrap gap-[10px]">
-                {twin.skills.map((s) => (
-                  <span
-                    key={s}
-                    className="rounded-full  bg-blue-100/30 px-[10px] py-[3px] text-[14px] text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </Card>
+              <Card title="Metrics">
+                <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+                  {[
+                    ["Expertise Score", twin.metrics.expertiseScore],
+                    ["Verified Use Cases", twin.metrics.verifiedUseCases],
+                    ["Issues Resolved", twin.metrics.issuesResolved],
+                    ["Automation Success Rate", twin.metrics.automationSuccessRate],
+                    ["Client Saves", twin.metrics.clientSaves],
+                    ["Last Updated", `${twin.lastUpdatedDays} days ago`],
+                  ].map(([k, v]) => (
+                    <li
+                      key={String(k)}
+                      className="flex items-center justify-between py-[8px] text-sm"
+                    >
+                      <span className="text-slate-600 dark:text-slate-300">{k}</span>
+                      <b className="text-slate-900 dark:text-slate-100">{String(v)}</b>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
 
-            <Card title="Metrics">
-              <ul className="divide-y divide-slate-100 dark:divide-slate-800">
-                {[
-                  ["Expertise Score", twin.metrics.expertiseScore],
-                  ["Verified Use Cases", twin.metrics.verifiedUseCases],
-                  ["Issues Resolved", twin.metrics.issuesResolved],
-                  ["Automation Success Rate", twin.metrics.automationSuccessRate],
-                  ["Client Saves", twin.metrics.clientSaves],
-                  ["Last Updated", `${twin.lastUpdatedDays} days ago`],
-                ].map(([k, v]) => (
-                  <li key={String(k)} className="flex items-center justify-between py-[8px] text-sm">
-                    <span className="text-slate-600 dark:text-slate-300">{k}</span>
-                    <b className="text-slate-900 dark:text-slate-100">{String(v)}</b>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-
-            <Card title="Published By">
-              <div className="flex items-center gap-[10px]">
-                <img src={twin.avatar} className="h-[40px] w-[40px] rounded-full" alt={twin.publishedBy.name} />
-                <div className="text-[14px] leading-[20px]">
-                  <div className="font-medium text-sm">{twin.publishedBy.name}</div>
-                  <div className="text-slate-500 dark:text-slate-400 text-sm">{twin.publishedBy.title}</div>
-                  <div className="text-slate-500 dark:text-slate-400 text-sm">
-                    {twin.publishedBy.exp} • {twin.publishedBy.projects}
+              <Card title="Published By">
+                <div className="flex items-center gap-[10px]">
+                  <img
+                    src={twin.avatar}
+                    className="h-[40px] w-[40px] rounded-full"
+                    alt={twin.publishedBy.name}
+                  />
+                  <div className="text-[14px] leading-[20px]">
+                    <div className="font-medium text-sm">{twin.publishedBy.name}</div>
+                    <div className="text-slate-500 dark:text-slate-400 text-sm">
+                      {twin.publishedBy.title}
+                    </div>
+                    <div className="text-slate-500 dark:text-slate-400 text-sm">
+                      {twin.publishedBy.exp} • {twin.publishedBy.projects}
+                    </div>
+                    <div className="text-slate-500 dark:text-slate-400 text-sm">
+                      {twin.publishedBy.org}
+                    </div>
                   </div>
-                  <div className="text-slate-500 dark:text-slate-400 text-sm">{twin.publishedBy.org}</div>
                 </div>
-              </div>
-            </Card>
+              </Card>
             </div>
           </div>
         </div>

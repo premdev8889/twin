@@ -3,6 +3,7 @@ export type Twin = {
   slug: string;
   name: string;
   avatar: string;
+  productImg: string;
   role: string;
   badges?: string[]; // e.g. ["AI Tools", "Design", "Strategy"]
   rating: number; // 4.9
@@ -37,7 +38,8 @@ export const twinsData: Twin[] = [
   {
     slug: "creative-integration-twin",
     name: "Noah Carter",
-    avatar: "../assets/vs.png",
+    avatar: "https://i.pravatar.cc/64?img=12",
+    productImg: "../assets/vs.png",
     role: "Creative Integration Twin",
     badges: ["AI Tools", "Design", "Strategy", "Content"],
     rating: 4.9,
@@ -96,6 +98,40 @@ export const twinsData: Twin[] = [
     slug: "creative-bp-twin",
     name: "Jordan Blake",
     avatar: "https://i.pravatar.cc/64?img=22",
+    productImg: "https://i.pravatar.cc/64?img=22",
+    role: "Creative BP Twin",
+    rating: 4.8,
+    levels: "2.9L",
+    subscribed: "980",
+    expYears: "9+",
+    lastUpdatedDays: 18,
+    interactionsLastMonth: 5210,
+    activitySeries: [2, 3, 3, 4, 4, 5, 4, 6, 5, 6, 6, 7, 6, 7, 8],
+    skills: ["BP", "Core HCM", "Time Tracking", "RCA"],
+    metrics: {
+      expertiseScore: 96.2,
+      verifiedUseCases: 121,
+      issuesResolved: 178,
+      automationSuccessRate: "2.9L",
+      clientSaves: 17,
+    },
+    modelIntroduction: "Focused on complex BP flows and validations.",
+    capabilities: ["BP audits", "Fault remediation", "Impact analysis"],
+    description: "Optimizes business process health and throughput.",
+    about: "Continuously updated with latest BP patterns.",
+    publishedBy: {
+      name: "Jordan Blake",
+      title: "Senior BP Consultant",
+      exp: "9+ Years",
+      projects: "80+ BP Programs",
+      org: "Enterprise Delivery",
+    },
+  },
+  {
+    slug: "creative-bp-twin",
+    name: "Jordan Blake",
+    avatar: "https://i.pravatar.cc/64?img=22",
+    productImg: "https://i.pravatar.cc/64?img=22",
     role: "Creative BP Twin",
     rating: 4.8,
     levels: "2.9L",
