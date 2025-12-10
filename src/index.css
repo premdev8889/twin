@@ -86,3 +86,10 @@ input[type='range']::-moz-range-thumb{
   height:16px; width:16px; border-radius:9999px; background:var(--thumb,#3b82f6);
   border:2px solid #fff; box-shadow:0 0 0 2px rgba(59,130,246,.25);
 }
+
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slideDown { animation: slideDown .35s ease-out; }

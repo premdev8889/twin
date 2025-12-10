@@ -12,6 +12,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { getTwinBySlug } from "../data/twinsData";
+import PaymentModal from "../components/sections/PaymentModal";
 
 /** ultra-thin sparkline exactly like screenshot */
 function Sparkline({ series }: { series: number[] }) {
@@ -165,7 +166,7 @@ export default function TwinDetailPage() {
       </div>
     );
   }
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <div className="mx-auto px-[18px] py-[18px]">
@@ -271,7 +272,10 @@ export default function TwinDetailPage() {
           {/* RIGHT header actions */}
           <div className="flex flex-col justify-between gap-[100px] min-h-[100%]">
             <div className="flex items-center justify-end gap-[10px]">
-              <button className="h-[36px] rounded-[10px] bg-sky-600 px-[14px] text-sm font-medium text-white shadow">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="h-[36px] rounded-[10px] bg-sky-600 px-[14px] text-sm font-medium text-white shadow"
+              >
                 Subscribe
               </button>
               <button className="grid h-[36px] w-[36px] place-items-center rounded-full border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800/70">
@@ -304,6 +308,7 @@ export default function TwinDetailPage() {
                 </div>
               ))}
             </div>
+            <PaymentModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
           </div>
         </div>
 
