@@ -8,6 +8,7 @@ import Chat from "./pages/Chat";
 import TwinDetailPage from "./pages/TwinDetailPage";
 import AuthorDetail from "./pages/AuthorDetail";
 import AuthorChat from "./pages/AuthorChat";
+import Marketplace from "./pages/Marketplace";
 
 
 const router = createBrowserRouter([
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
       { path: "chat", element: <Chat /> },
       { path: "twin/:slug", element: <TwinDetailPage /> },
       { path: "authors/:authorSlug", element: <AuthorDetail /> }, 
-      { path: "authors/:authorSlug/chat", element: <AuthorChat /> },     
+      { path: "authors/:authorSlug/chat", element: <AuthorChat /> },   
+      { path: "marketplace", element: <Marketplace /> },  
     ],
   },
 ]);

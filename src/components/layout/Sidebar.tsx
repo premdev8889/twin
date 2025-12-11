@@ -3,6 +3,7 @@ import {
   Home, Search, Bookmark, FolderClosed, MessageSquare, Settings,
     Handbag, 
    Sparkles} from "lucide-react"; // optional; emojis fallback below
+import { Link, useLocation } from "react-router-dom";
 
 type Item = {
   id: string;
@@ -28,11 +29,12 @@ const IconWrap: React.FC<{ active?: boolean; children: React.ReactNode }> = ({ a
 );
 
 export default function Sidebar() {
+  const { pathname } = useLocation();
   const top: Item[] = [
     { id: "logo", emoji: "❄️", active: false },
   ];
   const primary: Item[] = [
-    { id: "lock", icon: <Handbag  size={18} /> },
+    { id: "lock", icon: <Handbag  size={18} />, to: "/marketplace" },
     { id: "wand", icon: <Sparkles size={18} /> },
     { id: "search", icon: <Search size={18} />, active: true }, // active pill
     { id: "bookmark", icon: <Bookmark size={18} /> },
@@ -75,11 +77,17 @@ export default function Sidebar() {
 
         {/* Main icons */}
         <nav className="flex flex-col items-center gap-2 rounded-2xl bg-blue-100/40 p-2 dark:bg-slate-800/40">
-          {primary.map((it) => (
-            <button key={it.id} className="outline-none">
-              <IconWrap active={it.active}>{it.icon ?? <Home size={18} />}</IconWrap>
-            </button>
-          ))}
+          {primary.map((it) => {
+            const isActive = it.to ? pathname.startsWith(it.to) : false;
+            const content = <IconWrap active={isActive}>{it.icon}</IconWrap>;
+            return it.to ? (
+              <Link key={it.id} to={it.to} className="outline-none">
+                {content}
+              </Link>
+            ) : (
+              <button key={it.id} className="outline-none">{content}</button>
+            );
+          })}
         </nav>
 
         {/* Spacer card-like group */}
