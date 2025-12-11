@@ -1,5 +1,5 @@
-// (optional) npm i lucide-react
-import { Sun, Moon, Plus, Bell } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Sun, Moon, Plus, Bell, LogOut, Settings, Sparkles } from "lucide-react";
 
 type Props = {
   onToggleTheme?: () => void;
@@ -14,8 +14,22 @@ export default function Navbar({
   title = "Automation",
   avatarUrl = "https://i.pravatar.cc/64?img=12",
 }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Click outside to close
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <header className="w-full">
+    <header className="w-full relative">
       <div
         className="
           mx-auto flex items-center justify-between gap-3
@@ -83,14 +97,86 @@ export default function Navbar({
             <Bell size={16} />
           </button>
 
-          {/* Avatar */}
-          <img
-            src={avatarUrl}
-            alt="profile"
-            className="ml-1 size-9 rounded-full border border-white shadow-sm ring-1 ring-slate-200/60 dark:border-slate-800"
-          />
+          {/* Avatar + Dropdown */}
+          <div className="relative" ref={dropdownRef}>
+            <img
+              src={avatarUrl}
+              alt="profile"
+              onClick={() => setIsOpen(!isOpen)}
+              className="ml-1 size-9 rounded-full border border-white shadow-sm ring-1 ring-slate-200/60 dark:border-slate-800 cursor-pointer"
+            />
+
+            {/* Dropdown */}
+            {isOpen && (
+              <div
+                className="
+                  absolute right-0 mt-3 w-72 rounded-2xl border border-slate-200/60
+                  bg-white p-2 shadow-[0_8px_40px_-12px_rgba(59,130,246,0.25)]
+                  dark:border-slate-700 dark:bg-slate-900/90 animate-fadeIn
+                "
+              >
+                {/* Item */}
+                <DropdownItem icon={<Sparkles size={16} />} label="Digital Twin Studio" />
+                <DropdownItem icon={<Sparkles size={16} />} label="Twin 1" />
+                <DropdownItem icon={<Sparkles size={16} />} label="Twin 2" />
+
+                <div className="my-2 h-px bg-slate-100 dark:bg-slate-700/60" />
+
+                <DropdownItem icon={<LogOut size={16} />} label="Logout" noBadge />
+                <DropdownItem icon={<Settings size={16} />} label="Setting" />
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* animation */}
+      <style>
+        {`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .animate-fadeIn {
+            animation: fadeIn 0.2s ease-in-out;
+          }
+        `}
+      </style>
     </header>
+  );
+}
+
+function DropdownItem({
+  icon,
+  label,
+  noBadge = false,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  noBadge?: boolean;
+}) {
+  return (
+    <div
+      className="
+        flex items-center justify-between rounded-xl px-3 py-2 text-[14px] mb-3
+        text-slate-700 hover:bg-blue-50 dark:text-slate-200 dark:hover:bg-slate-800/60
+        cursor-pointer transition
+      "
+    >
+      <div className="flex items-center gap-2">
+        {icon}
+        <span>{label}</span>
+      </div>
+      {!noBadge && (
+        <span
+          className="
+            text-[11px] font-medium rounded-full bg-gradient-to-r from-purple-500 to-pink-500
+            text-white px-2 py-[1px] shadow-sm
+          "
+        >
+          ⚡ New
+        </span>
+      )}
+    </div>
   );
 }
