@@ -4,6 +4,7 @@ import { Mic, SendHorizontal } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import CardProduct from "../components/ui/CardProduct";
 
+
 export default function Home() {
   const { authorSlug } = useParams();
   const nav = useNavigate();
@@ -38,9 +39,15 @@ export default function Home() {
   }, []);
 
   const goChat = () => {
-    const q = query.trim() || placeholders[pi].replace(/\.\.\.$/, "");
+  const q = query.trim() || placeholders[pi].replace(/\.\.\.$/, "");
+  if (authorSlug) {
+    // ✅ author context me ho —> Author Chat
+    nav(`/authors/${authorSlug}/chat?q=${encodeURIComponent(q)}`);
+  } else {
+    // normal home —> normal chat
     nav(`/chat?q=${encodeURIComponent(q)}`);
-  };
+  }
+};
 
   // 🔹 Rotating tech words in heading
   const techWords = ["Workday", "SAP", "SuccessFactors", "Salesforce", "ServiceNow"];

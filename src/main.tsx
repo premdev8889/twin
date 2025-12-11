@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Chat from "./pages/Chat";
 import TwinDetailPage from "./pages/TwinDetailPage";
 import AuthorDetail from "./pages/AuthorDetail";
+import AuthorChat from "./pages/AuthorChat";
 
 
 const router = createBrowserRouter([
@@ -15,10 +16,11 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Home /> },
-      { path: "author/:authorSlug", element: <Home key="author" /> },   // Home with avatar
+      { path: "author/:authorSlug", element: <Home key="author" /> },   
       { path: "chat", element: <Chat /> },
       { path: "twin/:slug", element: <TwinDetailPage /> },
-      { path: "authors/:authorSlug", element: <AuthorDetail /> },       // Author detail page
+      { path: "authors/:authorSlug", element: <AuthorDetail /> }, 
+      { path: "authors/:authorSlug/chat", element: <AuthorChat /> },     
     ],
   },
 ]);
