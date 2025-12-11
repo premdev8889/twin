@@ -10,14 +10,15 @@ import AuthorDetail from "./pages/AuthorDetail";
 
 
 const router = createBrowserRouter([
-  {
+ {
     path: "/",
     element: <App />,
     children: [
       { index: true, element: <Home /> },
+      { path: "author/:authorSlug", element: <Home key="author" /> },   // Home with avatar
       { path: "chat", element: <Chat /> },
-      { path:"/twin/:slug", element:<TwinDetailPage/> },
-      { path:"/author/:name", element:<AuthorDetail /> }
+      { path: "twin/:slug", element: <TwinDetailPage /> },
+      { path: "authors/:authorSlug", element: <AuthorDetail /> },       // Author detail page
     ],
   },
 ]);

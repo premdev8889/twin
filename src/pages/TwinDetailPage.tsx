@@ -166,7 +166,9 @@ export default function TwinDetailPage() {
       </div>
     );
   }
+  // const toSlug = (s: string) => s.toLowerCase().replace(/\s+/g, "-");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // const authorSlug = toSlug(twin.publishedBy.name);
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <div className="mx-auto px-[18px] py-[18px]">
@@ -179,7 +181,11 @@ export default function TwinDetailPage() {
               alt={twin.name}
             />
             <div className="pt-[2px]">
-              <h1 className="text-[22px] font-semibold leading-[26px]">{twin.role}</h1>
+              <h1 className="text-[22px] font-semibold leading-[26px]">
+                <Link to={`/author/${twin.publishedBy.name.toLowerCase().replace(/\s+/g, "-")}`} className="hover:underline">
+                  {twin.role}
+                </Link>
+              </h1>
 
               {/* badges row */}
               <div className="mt-[8px] flex flex-wrap items-center gap-[6px]">
@@ -204,7 +210,7 @@ export default function TwinDetailPage() {
                 <div className="mt-[10px] inline-flex items-center gap-[8px] text-sm text-slate-700 dark:text-slate-300">
                   <span className="text-slate-500 text-sm">Published by:</span>
                   <Link
-                    to={`/author/${twin.publishedBy.name.toLowerCase().replace(/\s+/g, "-")}`}
+                    to={`/authors/${twin.publishedBy.name.toLowerCase().replace(/\s+/g, "-")}`}
                     className="bg-blue-100/30 flex gap-2 py-2 px-3 rounded-full align-center hover:bg-blue-200/50 transition"
                   >
                     <img
