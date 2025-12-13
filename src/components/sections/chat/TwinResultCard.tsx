@@ -1,7 +1,6 @@
 import { Bookmark } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// src/components/chat/TwinResultCard.tsx
 type Props = {
   slug: string;
   avatar: string;
@@ -14,44 +13,120 @@ type Props = {
 };
 
 export default function TwinResultCard({
-  slug, avatar, name, role, summary, subscribers,  year = "", Scenarios =""
+  slug,
+  avatar,
+  name,
+  role,
+  summary,
+  subscribers,
+  year = "",
+  Scenarios = "",
 }: Props) {
   return (
-    <article className="rounded-2xl  bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900/60">
-      <div className="flex items-start gap-3">
-        <img src={avatar} className="size-10 rounded-full object-cover" alt={name} />
-        <div className="min-w-0 flex-1">
-          <div className="flex justify-between">
-            <div className="">
-            <div className="flex items-end gap-2">
-            <h4 className="text-[20px] font-semibold">{name}</h4>
-            <span className="text-neutral-600 text-[12px] mb-1" title="verified">{subscribers}</span>
-          </div>
-          <p className="text-[14px] text-slate-500">{role}</p>
-          </div>
-          <div className="text-[11px] text-slate-500 whitespace-nowrap"> <span className="border rounded-full py-1 px-2 mr-2">{year}</span> <span className="border rounded-full py-1 px-2">{Scenarios}</span> </div>
+    <article
+      className="
+        rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm
+        dark:border-slate-700 dark:bg-slate-900/60
+        transition hover:shadow-md
+      "
+    >
+      <div className="flex  sm:items-start gap-4">
+        {/* Avatar */}
+        <img
+          src={avatar}
+          className="size-12 sm:size-14 rounded-full object-cover border border-slate-200 dark:border-slate-700 shadow-sm mx-auto sm:mx-0"
+          alt={name}
+        />
+
+        {/* Content */}
+        <div className=" sm:mt-0 flex-1 min-w-0">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <h4 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-100">
+                  {name}
+                </h4>
+                <span
+                  className="text-slate-500 text-[12px]"
+                  title="Subscribers"
+                >
+                  {subscribers}
+                </span>
+              </div>
+              <p className="text-[13px] sm:text-[14px] text-slate-500 dark:text-slate-400">
+                {role}
+              </p>
+            </div>
+
+            {/* Year / Scenarios */}
+            {(year || Scenarios) && (
+              <div className="flex flex-wrap gap-2 text-[11px] sm:text-[12px] text-slate-600 dark:text-slate-400">
+                {year && (
+                  <span className="border rounded-full px-2 py-1 dark:border-slate-700">
+                    {year}
+                  </span>
+                )}
+                {Scenarios && (
+                  <span className="border rounded-full px-2 py-1 dark:border-slate-700">
+                    {Scenarios}
+                  </span>
+                )}
+              </div>
+            )}
           </div>
 
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 line-clamp-2">{summary}</p>
+          {/* Summary */}
+          <p
+            className="
+              mt-2 text-sm text-slate-600 dark:text-slate-300
+              leading-snug line-clamp-2 sm:line-clamp-3
+            "
+          >
+            {summary}
+          </p>
 
-          <div className="mt-3 flex items-center gap-2">
-           
-               <Link
+          {/* Buttons */}
+          <div
+            className="
+              mt-4 flex flex-wrap sm:flex-nowrap items-center justify-start gap-2
+            "
+          >
+            <Link
               to={`/twin/${slug}`}
-              className="rounded-full  px-3 py-1.5 text-sm  shadow"
+              className="
+                rounded-full bg-gradient-to-tr from-sky-500 to-blue-500
+                px-4 py-1.5 text-sm text-white font-medium shadow-sm
+                hover:from-sky-600 hover:to-blue-600 transition
+              "
             >
               More
             </Link>
-              <button  className="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800/70">
-                Explore
-              </button>
-              <button  className="rounded-full border border-slate-200 bg-white p-2 text-xs shadow-sm hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800/70">
-                <Bookmark size={15} />
-              </button>
-           
+
+            <button
+              className="
+                rounded-full border border-slate-200 bg-white
+                px-4 py-1.5 text-sm text-slate-700 shadow-sm
+                hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-200
+                transition
+              "
+            >
+              Explore
+            </button>
+
+            <button
+              className="
+                rounded-full border border-slate-200 bg-white p-2
+                text-slate-700 shadow-sm hover:bg-slate-50
+                dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-200
+                transition
+              "
+              aria-label="Save Twin"
+            >
+              <Bookmark size={16} />
+            </button>
           </div>
         </div>
-        
       </div>
     </article>
   );

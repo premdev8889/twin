@@ -14,7 +14,7 @@ import {
 import { getTwinBySlug } from "../data/twinsData";
 import PaymentModal from "../components/sections/PaymentModal";
 
-/** ultra-thin sparkline exactly like screenshot */
+/** ultra-thin sparkline exactly like screenshot (responsive width) */
 function Sparkline({ series }: { series: number[] }) {
   const points = useMemo(() => {
     if (!series.length) return "";
@@ -74,75 +74,20 @@ export default function TwinDetailPage() {
 
   const issues = useMemo(
     () => [
-      {
-        id: "WDI-214",
-        title: "401 Unauthorized on outbound REST",
-        severity: "High",
-        status: "Resolved",
-      },
-      {
-        id: "WDI-198",
-        title: "PECI mismatch for terminated workers",
-        severity: "Medium",
-        status: "In Progress",
-      },
-      {
-        id: "WDI-176",
-        title: "BP step stuck due to security domain",
-        severity: "High",
-        status: "Resolved",
-      },
-      {
-        id: "WDI-151",
-        title: "Connector timeout during bulk run",
-        severity: "Low",
-        status: "Open",
-      },
-      {
-        id: "WDI-139",
-        title: "Certificate nearing expiry",
-        severity: "Medium",
-        status: "Resolved",
-      },
-      {
-        id: "WDI-127",
-        title: "DT map error on nested fields",
-        severity: "Low",
-        status: "Resolved",
-      },
+      { id: "WDI-214", title: "401 Unauthorized on outbound REST", severity: "High", status: "Resolved" },
+      { id: "WDI-198", title: "PECI mismatch for terminated workers", severity: "Medium", status: "In Progress" },
+      { id: "WDI-176", title: "BP step stuck due to security domain", severity: "High", status: "Resolved" },
+      { id: "WDI-151", title: "Connector timeout during bulk run", severity: "Low", status: "Open" },
+      { id: "WDI-139", title: "Certificate nearing expiry", severity: "Medium", status: "Resolved" },
+      { id: "WDI-127", title: "DT map error on nested fields", severity: "Low", status: "Resolved" },
       { id: "WDI-118", title: "403 forbidden on RaaS", severity: "High", status: "Resolved" },
-      {
-        id: "WDI-104",
-        title: "Studio retry policy misconfigured",
-        severity: "Medium",
-        status: "Open",
-      },
-      {
-        id: "WDI-092",
-        title: "Pagination error for EIB export",
-        severity: "Low",
-        status: "Resolved",
-      },
-      {
-        id: "WDI-081",
-        title: "PECI file missing delta rows",
-        severity: "Medium",
-        status: "Resolved",
-      },
-      {
-        id: "WDI-072",
-        title: "Throttling limits exceeded",
-        severity: "High",
-        status: "In Progress",
-      },
+      { id: "WDI-104", title: "Studio retry policy misconfigured", severity: "Medium", status: "Open" },
+      { id: "WDI-092", title: "Pagination error for EIB export", severity: "Low", status: "Resolved" },
+      { id: "WDI-081", title: "PECI file missing delta rows", severity: "Medium", status: "Resolved" },
+      { id: "WDI-072", title: "Throttling limits exceeded", severity: "High", status: "In Progress" },
       { id: "WDI-060", title: "Core Connector mapping gaps", severity: "Low", status: "Resolved" },
       { id: "WDI-051", title: "Studio log rotation too low", severity: "Low", status: "Open" },
-      {
-        id: "WDI-043",
-        title: "Webhook signature validation",
-        severity: "Medium",
-        status: "Resolved",
-      },
+      { id: "WDI-043", title: "Webhook signature validation", severity: "Medium", status: "Resolved" },
       { id: "WDI-036", title: "Test data parity issues", severity: "Low", status: "Resolved" },
       { id: "WDI-028", title: "RCA report template request", severity: "Low", status: "Open" },
     ],
@@ -151,12 +96,12 @@ export default function TwinDetailPage() {
 
   if (!twin) {
     return (
-      <div className="min-h-screen bg-slate-50 p-6 dark:bg-slate-950">
-        <div className="mx-auto max-w-[1180px]">
+      <div className="min-h-screen bg-slate-50 p-4 sm:p-6 dark:bg-slate-950">
+        <div className="mx-auto w-full max-w-6xl">
           <Link to="/" className="inline-flex items-center gap-2 text-sky-600 text-[14px]">
             <ChevronLeft size={18} /> Back
           </Link>
-          <div className="mt-6 rounded-[18px] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900/60">
+          <div className="mt-4 sm:mt-6 rounded-[18px] border border-slate-200 bg-white p-5 sm:p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900/60">
             <h1 className="text-[18px] font-semibold">Twin not found</h1>
             <p className="mt-1 text-[14px] text-slate-600 dark:text-slate-300">
               Please go back and try again.
@@ -166,29 +111,39 @@ export default function TwinDetailPage() {
       </div>
     );
   }
-  // const toSlug = (s: string) => s.toLowerCase().replace(/\s+/g, "-");
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const authorSlug = toSlug(twin.publishedBy.name);
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-      <div className="mx-auto px-[18px] py-[18px]">
+    <div className="min-h-screen  text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+      <div className="mx-auto w-full  ">
         {/* HEADER */}
-        <div className="flex items-start justify-between rounded-[20px] border border-sky-100 bg-white/80 p-[16px] pb-0 shadow-sm backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/60">
-          <div className="flex items-start gap-[14px]">
+        <div
+          className="
+            flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 sm:gap-5
+            rounded-[20px] border border-sky-100 bg-white/80 p-4 sm:p-5 shadow-sm backdrop-blur-sm
+            dark:border-slate-700 dark:bg-slate-900/60
+          "
+        >
+          {/* Left cluster (image + info) */}
+          <div className="flex items-start gap-3 sm:gap-4">
             <img
               src={twin.productImg}
-              className="h-[100px] w-[100px] rounded-[14px] shadow-sm"
+              className="h-[88px] w-[88px] sm:h-[100px] sm:w-[100px] rounded-[14px] shadow-sm object-cover"
               alt={twin.name}
             />
-            <div className="pt-[2px]">
-              <h1 className="text-[22px] font-semibold leading-[26px]">
-                <Link to={`/author/${twin.publishedBy.name.toLowerCase().replace(/\s+/g, "-")}`} className="hover:underline">
+            <div className="pt-[2px] min-w-0">
+              <h1 className="text-[20px] sm:text-[22px] font-semibold leading-[26px]">
+                <Link
+                  to={`/author/${twin.publishedBy.name.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="hover:underline"
+                >
                   {twin.role}
                 </Link>
               </h1>
 
               {/* badges row */}
-              <div className="mt-[8px] flex flex-wrap items-center gap-[6px]">
+              <div className="mt-2 flex flex-wrap items-center gap-[6px]">
                 {(twin.badges ?? ["AI Tools", "Design", "Strategy", "Content"]).map((b) => (
                   <span
                     key={b}
@@ -200,47 +155,31 @@ export default function TwinDetailPage() {
               </div>
 
               {/* sub description */}
-              <p className="mt-[10px] max-w-[760px] text-[16px] leading-[26px] text-slate-600 dark:text-slate-300">
+              <p className="mt-2 sm:mt-[10px] max-w-[760px] text-[14px] sm:text-[16px] leading-[22px] sm:leading-[26px] text-slate-600 dark:text-slate-300">
                 This Digital Twin is trained on 12+ years of real Workday Integration experience—
                 including Studio, EIBs, PECI, Core Connectors, DT, and REST/SOAP APIs.
               </p>
 
               {/* published by */}
-              <div className="flex justify-between">
-                <div className="mt-[10px] inline-flex items-center gap-[8px] text-sm text-slate-700 dark:text-slate-300">
-                  <span className="text-slate-500 text-sm">Published by:</span>
-                  <Link
-                    to={`/authors/${twin.publishedBy.name.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="bg-blue-100/30 flex gap-2 py-2 px-3 rounded-full align-center hover:bg-blue-200/50 transition"
-                  >
-                    <img
-                      src={twin.avatar}
-                      className="h-6 w-6 rounded-full"
-                      alt={twin.publishedBy.name}
-                    />
-                    <span className="font-medium text-sm">{twin.publishedBy.name}</span>
-                    <BadgeCheck size={22} fill="#3084F1" color="#fff" />
-                  </Link>
-                </div>
+              <div className="mt-2 sm:mt-[10px] inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                <span className="text-slate-500 text-sm">Published by:</span>
+                <Link
+                  to={`/authors/${twin.publishedBy.name.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="bg-blue-100/30 flex gap-2 py-1.5 sm:py-2 px-3 rounded-full items-center hover:bg-blue-200/50 transition"
+                >
+                  <img src={twin.avatar} className="h-6 w-6 rounded-full" alt={twin.publishedBy.name} />
+                  <span className="font-medium text-sm">{twin.publishedBy.name}</span>
+                  <BadgeCheck size={20} fill="#3084F1" color="#fff" />
+                </Link>
               </div>
 
-              {/* Tabs */}
-              <div className="mt-[14px] border-b border-slate-200">
-                <div className="flex items-center gap-[8px]">
+              {/* Tabs (scroll on mobile) */}
+              <div className="mt-3 sm:mt-[14px] border-b border-slate-200">
+                <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
                   {[
                     { key: "details" as const, label: "Details", icon: Info },
-                    {
-                      key: "comments" as const,
-                      label: "Comments",
-                      icon: MessageSquare,
-                      count: comments.length,
-                    },
-                    {
-                      key: "issues" as const,
-                      label: "Issue",
-                      icon: AlertTriangle,
-                      count: issues.length,
-                    },
+                    { key: "comments" as const, label: "Comments", icon: MessageSquare, count: comments.length },
+                    { key: "issues" as const, label: "Issue", icon: AlertTriangle, count: issues.length },
                   ].map((t) => {
                     const active = activeTab === t.key;
                     const Icon = t.icon;
@@ -250,7 +189,7 @@ export default function TwinDetailPage() {
                         onClick={() => setActiveTab(t.key)}
                         role="tab"
                         aria-selected={active}
-                        className={`relative inline-flex items-center gap-[8px] px-[16px] py-[8px] text-sm font-medium border-b-2 ${
+                        className={`relative inline-flex items-center gap-2 px-3 sm:px-[16px] py-2 text-sm font-medium border-b-2 ${
                           active
                             ? "text-sky-600 border-sky-500"
                             : "text-slate-600 border-transparent hover:text-slate-800"
@@ -260,7 +199,7 @@ export default function TwinDetailPage() {
                         <span>{t.label}</span>
                         {typeof t.count === "number" && (
                           <span
-                            className={`ml-[6px] rounded-full px-[8px] py-[2px] text-[12px] ${
+                            className={`ml-1 rounded-full px-2 py-[2px] text-[12px] ${
                               active ? "bg-sky-50 text-sky-700" : "bg-slate-100 text-slate-500"
                             }`}
                           >
@@ -275,12 +214,12 @@ export default function TwinDetailPage() {
             </div>
           </div>
 
-          {/* RIGHT header actions */}
-          <div className="flex flex-col justify-between gap-[100px] min-h-[100%]">
-            <div className="flex items-center justify-end gap-[10px]">
+          {/* RIGHT header actions + stats (wrap on mobile) */}
+          <div className="flex flex-col gap-3 sm:gap-[10px] lg:items-end">
+            <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-[10px]">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="h-[36px] rounded-[10px] bg-sky-600 px-[14px] text-sm font-medium text-white shadow"
+                className="h-[36px] rounded-[10px] bg-sky-600 px-[14px] text-sm font-medium text-white shadow hover:bg-sky-700 transition"
               >
                 Subscribe
               </button>
@@ -291,7 +230,8 @@ export default function TwinDetailPage() {
                 <Bookmark size={18} />
               </button>
             </div>
-            <div className="mt-[10px] flex flex-wrap gap-[8px]">
+
+            <div className="flex flex-wrap gap-2 sm:gap-[8px]">
               {[
                 {
                   label: "Rating",
@@ -314,16 +254,17 @@ export default function TwinDetailPage() {
                 </div>
               ))}
             </div>
+
             <PaymentModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
           </div>
         </div>
 
         {/* CONTENT AREA */}
-        <div className="mt-[14px] grid grid-cols-12 gap-[14px]">
+        <div className="mt-4 sm:mt-[14px] grid grid-cols-12 gap-4 sm:gap-[14px]">
           {/* LEFT column */}
-          <div className="col-span-12 space-y-[14px] lg:col-span-6">
+          <div className="col-span-12 space-y-4 sm:space-y-[14px] lg:col-span-6">
             {activeTab === "details" && (
-              <div className="bg-white p-8 rounded-2xl h-[100%]">
+              <div className="bg-white p-5 sm:p-8 rounded-2xl">
                 <Card title="Model Introduction">
                   <p className="text-sm leading-[22px] text-slate-700 dark:text-slate-300">
                     {twin.modelIntroduction}
@@ -380,19 +321,19 @@ export default function TwinDetailPage() {
                 <ul className="divide-y divide-slate-100 dark:divide-slate-800">
                   {issues.map((it) => (
                     <li key={it.id} className="flex items-center justify-between py-[10px]">
-                      <div>
+                      <div className="min-w-0">
                         <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
                           {it.id} — {it.title}
                         </div>
                         <div className="mt-[2px] text-[12px] text-slate-500">{it.status}</div>
                       </div>
                       <span
-                        className={`rounded-full px-[10px] py-[3px] text-[12px] ${
+                        className={`ml-3 rounded-full px-[10px] py-[3px] text-[12px] whitespace-nowrap ${
                           it.severity === "High"
                             ? "bg-rose-100 text-rose-700"
                             : it.severity === "Medium"
-                              ? "bg-amber-100 text-amber-700"
-                              : "bg-emerald-100 text-emerald-700"
+                            ? "bg-amber-100 text-amber-700"
+                            : "bg-emerald-100 text-emerald-700"
                         }`}
                       >
                         {it.severity}
@@ -404,9 +345,9 @@ export default function TwinDetailPage() {
             )}
           </div>
 
-          {/* RIGHT column (always visible) */}
-          <div className="col-span-12 space-y-[14px] lg:col-span-6">
-            <div className="bg-white p-8 rounded-2xl">
+          {/* RIGHT column */}
+          <div className="col-span-12 space-y-4 sm:space-y-[14px] lg:col-span-6">
+            <div className="bg-white p-5 sm:p-8 rounded-2xl">
               <Card title="About">
                 <p className="text-sm leading-[22px] text-slate-700 dark:text-slate-300">
                   Digital Twin of a Senior Workday Integration Consultant. Trained on real-world
@@ -416,16 +357,16 @@ export default function TwinDetailPage() {
               </Card>
 
               <Card title="Last Month Activity">
-                <div className="flex items-end justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
                   <div>
-                    <div className="text-[22px] font-semibold leading-none">
+                    <div className="text-[20px] sm:text-[22px] font-semibold leading-none">
                       {twin.interactionsLastMonth.toLocaleString()}
                     </div>
                     <div className="mt-[4px] text-sm text-slate-500">
                       (problem analysis, RCA, test generation, step validation)
                     </div>
                   </div>
-                  <div className="w-[130px] text-sky-600">
+                  <div className="w-full sm:w-[220px] md:w-[260px] lg:w-[280px] text-sky-600">
                     <Sparkline series={twin.activitySeries} />
                   </div>
                 </div>
@@ -436,7 +377,7 @@ export default function TwinDetailPage() {
                   {twin.skills.map((s) => (
                     <span
                       key={s}
-                      className="rounded-full  bg-blue-100/30 px-[10px] py-[3px] text-[14px] text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200"
+                      className="rounded-full bg-blue-100/30 px-[10px] py-[3px] text-[14px] text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200"
                     >
                       {s}
                     </span>
@@ -497,9 +438,9 @@ export default function TwinDetailPage() {
 /* Reusable card */
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className=" mb-6">
+    <div className="mb-6">
       <div className="mb-[8px] flex items-center justify-between">
-        <h3 className="text-[20px] font-semibold leading-[18px] mb-2">{title}</h3>
+        <h3 className="text-[18px] sm:text-[20px] font-semibold leading-[18px] mb-2">{title}</h3>
       </div>
       {children}
     </div>

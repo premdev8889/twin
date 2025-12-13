@@ -1,4 +1,3 @@
-// src/pages/AutomationChatPage.tsx
 import { useState } from "react";
 import { Mic, SendHorizontal } from "lucide-react";
 import FilterPanel from "../components/sections/chat/FilterPanel";
@@ -15,7 +14,7 @@ export default function AutomationChatPage() {
     const text = val.trim();
     if (!text) return;
     setMessages((m) => [...m, text]);
-    setVal(""); // send ke baad input clear
+    setVal(""); // clear after send
   };
 
   // ---- Filter Chips ----
@@ -53,44 +52,41 @@ export default function AutomationChatPage() {
   const clearAllChips = () => setSelectedChips(new Set());
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-      <div className="px-4 py-4">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+    <div className="min-h-screen  text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+      <div className="px-4 sm:px-6 py-4 sm:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* MAIN */}
           <main className="lg:col-span-9 space-y-5">
             {/* Hero banner */}
-            <div className="rounded-3xl bg-gradient-to-tr from-sky-600 to-blue-500 p-6 text-white shadow">
-              <h2 className="text-3xl font-bold">
+            <section className="rounded-3xl bg-gradient-to-tr from-sky-600 to-blue-500 p-5 sm:p-6 text-white shadow-lg">
+              <h2 className="text-2xl sm:text-3xl font-bold leading-tight">
                 Discover the best twins for you here!
               </h2>
-              <p className="mt-1 max-w-3xl text-white/90 text-lg">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              <p className="mt-2 max-w-3xl text-white/90 text-sm sm:text-base">
+                Explore a variety of creative and intelligent twins designed to
+                make your tasks easier and ideas smarter.
               </p>
 
-              {/* Search / Composer pill (edit removed) */}
+              {/* Search / Composer pill */}
               <div className="mt-4 rounded-2xl bg-white p-2 pl-4 text-slate-800 shadow-inner">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-center gap-2">
                   <input
                     value={val}
                     onChange={(e) => setVal(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") send();
-                    }}
+                    onKeyDown={(e) => e.key === "Enter" && send()}
                     placeholder="Type your message..."
-                    className="w-full bg-transparent py-2 outline-none"
+                    className="w-full bg-transparent py-2 outline-none text-[15px]"
                   />
-
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-between sm:justify-end gap-2 w-[100%] sm:w-fit ">
                     <button
-                      className="grid place-items-center rounded-full bg-slate-100 p-2"
+                      className="grid place-items-center rounded-full bg-slate-100 p-2 sm:p-2.5 hover:bg-slate-200 transition"
                       aria-label="Voice input"
                     >
                       <Mic size={16} />
                     </button>
                     <button
                       onClick={send}
-                      className="grid place-items-center rounded-full bg-gradient-to-tr from-sky-500 to-blue-500 p-2 text-white shadow"
+                      className="grid place-items-center rounded-full bg-gradient-to-tr from-sky-500 to-blue-500 p-2 sm:p-2.5 text-white shadow hover:from-sky-600 hover:to-blue-600 transition active:scale-[0.97]"
                       aria-label="Send message"
                     >
                       <SendHorizontal size={16} />
@@ -98,17 +94,16 @@ export default function AutomationChatPage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
 
             {/* Filter chips row with × */}
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex  items-center gap-2 sm:gap-3 overflow-x-auto pb-1 scrollbar-hide">
               {filterChips.map((c) => {
                 const selected = selectedChips.has(c);
                 return (
                   <div
                     key={c}
-                    className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm shadow-sm transition
-                    ${
+                    className={`flex items-center gap-1 rounded-full border px-3 py-1 text-sm shadow-sm whitespace-nowrap transition ${
                       selected
                         ? "border-sky-200 bg-sky-50 text-sky-700"
                         : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200"
@@ -152,7 +147,7 @@ export default function AutomationChatPage() {
             </div>
 
             {/* Twin cards - dynamic from twinsData */}
-            <div className="space-y-4">
+            <section className="space-y-4 sm:space-y-5">
               {twinsData.map((t) => (
                 <TwinResultCard
                   key={t.slug}
@@ -168,27 +163,31 @@ export default function AutomationChatPage() {
                   }
                 />
               ))}
-            </div>
+            </section>
 
             {/* Messages (if any) */}
             {messages.length > 0 && (
-              <div className="space-y-3 pt-2">
+              <section className="space-y-3 pt-3">
                 {messages.map((m, i) => (
                   <div
                     key={i}
                     className="rounded-2xl border border-slate-200 bg-white py-3 px-4 shadow-sm dark:border-slate-700 dark:bg-slate-900/60"
                   >
-                    <p className="text-sm text-slate-700 dark:text-slate-200">
+                    <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200">
                       {m}
                     </p>
                   </div>
                 ))}
-              </div>
+              </section>
             )}
           </main>
 
-          {/* Right filter panel */}
-          <FilterPanel onReset={() => console.log("reset filters")} />
+          {/* RIGHT FILTER PANEL */}
+          <aside className="lg:col-span-3 hidden lg:block">
+            <div className="sticky top-20">
+              <FilterPanel onReset={() => console.log('reset filters')} />
+            </div>
+          </aside>
         </div>
       </div>
     </div>

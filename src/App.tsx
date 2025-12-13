@@ -1,32 +1,62 @@
-import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import { useTheme } from "./hooks/useTheme";
 import Navbar from "./components/layout/Navbar";
-import Sidebar from "./components/layout/Sidebar";
+import Sidebar, { MobileMenu, mobileItems, subscriptionTwins } from "./components/layout/Sidebar";
 
 export default function App() {
   const { theme, toggle } = useTheme();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  // Close sidebar drawer on route change (mobile)
+  useEffect(() => {
+    if (isSidebarOpen) setIsSidebarOpen(false);
+  }, [pathname]);
+
+  // Body scroll lock for sidebar drawer
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    if (isSidebarOpen) document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [isSidebarOpen]);
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-950">
-      {/* FIXED SIDEBAR WRAPPER */}
-      <div className="fixed left-0 top-0 bottom-0 z-40 w-[72px]">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 overflow-x-hidden">
+      {/* Desktop fixed sidebar */}
+      <div className="fixed left-0 top-0 bottom-0 z-40 w-[72px] hidden sm:block">
         <Sidebar />
       </div>
 
-      {/* CONTENT AREA (gives space for fixed sidebar) */}
-      <div className="pl-[70px] pr-0"> 
-        {/* STICKY HEADER */}
+      {/* Content */}
+      <div className="pl-0 sm:pl-[72px]">
+        {/* Sticky header */}
         <div className="sticky top-0 z-30">
-          <Navbar title="Automation" theme={theme} onToggleTheme={toggle} />
+          <Navbar
+            title="Automation"
+            theme={theme}
+            onToggleTheme={toggle}
+            onOpenSidebar={() => setIsSidebarOpen(true)} // logo → sidebar drawer
+          />
         </div>
 
-        {/* MAIN CONTENT */}
-        <main
-         
-        >
-          <Outlet />
+        {/* Main */}
+        <main className="px-3 sm:px-6 py-4">
+          <div className="mx-auto w-full ">
+            <Outlet />
+          </div>
         </main>
       </div>
+
+      {/* Mobile Sidebar Drawer */}
+      {isSidebarOpen && (
+        <MobileMenu
+          onClose={() => setIsSidebarOpen(false)}
+          items={mobileItems}
+          twins={subscriptionTwins}
+          pathname={pathname}
+        />
+      )}
     </div>
   );
 }
