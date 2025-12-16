@@ -31,12 +31,12 @@ export default function App() {
       {/* Content */}
       <div className="pl-0 sm:pl-[72px]">
         {/* Sticky header */}
-        <div className="sticky top-0 z-30">
+        <div className="fixed top-0 z-30 w-full sm:w-[95%]">
           <Navbar
             title="Automation"
             theme={theme}
             onToggleTheme={toggle}
-            onOpenSidebar={() => setIsSidebarOpen(true)} // logo → sidebar drawer
+            onOpenSidebar={() => setIsSidebarOpen(true)} 
           />
         </div>
 
