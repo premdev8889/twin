@@ -3,7 +3,6 @@ import React, { useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   Bell,
-  Star,
   ChevronLeft,
   BadgeCheck,
   Bookmark,
@@ -74,20 +73,75 @@ export default function TwinDetailPage() {
 
   const issues = useMemo(
     () => [
-      { id: "WDI-214", title: "401 Unauthorized on outbound REST", severity: "High", status: "Resolved" },
-      { id: "WDI-198", title: "PECI mismatch for terminated workers", severity: "Medium", status: "In Progress" },
-      { id: "WDI-176", title: "BP step stuck due to security domain", severity: "High", status: "Resolved" },
-      { id: "WDI-151", title: "Connector timeout during bulk run", severity: "Low", status: "Open" },
-      { id: "WDI-139", title: "Certificate nearing expiry", severity: "Medium", status: "Resolved" },
-      { id: "WDI-127", title: "DT map error on nested fields", severity: "Low", status: "Resolved" },
+      {
+        id: "WDI-214",
+        title: "401 Unauthorized on outbound REST",
+        severity: "High",
+        status: "Resolved",
+      },
+      {
+        id: "WDI-198",
+        title: "PECI mismatch for terminated workers",
+        severity: "Medium",
+        status: "In Progress",
+      },
+      {
+        id: "WDI-176",
+        title: "BP step stuck due to security domain",
+        severity: "High",
+        status: "Resolved",
+      },
+      {
+        id: "WDI-151",
+        title: "Connector timeout during bulk run",
+        severity: "Low",
+        status: "Open",
+      },
+      {
+        id: "WDI-139",
+        title: "Certificate nearing expiry",
+        severity: "Medium",
+        status: "Resolved",
+      },
+      {
+        id: "WDI-127",
+        title: "DT map error on nested fields",
+        severity: "Low",
+        status: "Resolved",
+      },
       { id: "WDI-118", title: "403 forbidden on RaaS", severity: "High", status: "Resolved" },
-      { id: "WDI-104", title: "Studio retry policy misconfigured", severity: "Medium", status: "Open" },
-      { id: "WDI-092", title: "Pagination error for EIB export", severity: "Low", status: "Resolved" },
-      { id: "WDI-081", title: "PECI file missing delta rows", severity: "Medium", status: "Resolved" },
-      { id: "WDI-072", title: "Throttling limits exceeded", severity: "High", status: "In Progress" },
+      {
+        id: "WDI-104",
+        title: "Studio retry policy misconfigured",
+        severity: "Medium",
+        status: "Open",
+      },
+      {
+        id: "WDI-092",
+        title: "Pagination error for EIB export",
+        severity: "Low",
+        status: "Resolved",
+      },
+      {
+        id: "WDI-081",
+        title: "PECI file missing delta rows",
+        severity: "Medium",
+        status: "Resolved",
+      },
+      {
+        id: "WDI-072",
+        title: "Throttling limits exceeded",
+        severity: "High",
+        status: "In Progress",
+      },
       { id: "WDI-060", title: "Core Connector mapping gaps", severity: "Low", status: "Resolved" },
       { id: "WDI-051", title: "Studio log rotation too low", severity: "Low", status: "Open" },
-      { id: "WDI-043", title: "Webhook signature validation", severity: "Medium", status: "Resolved" },
+      {
+        id: "WDI-043",
+        title: "Webhook signature validation",
+        severity: "Medium",
+        status: "Resolved",
+      },
       { id: "WDI-036", title: "Test data parity issues", severity: "Low", status: "Resolved" },
       { id: "WDI-028", title: "RCA report template request", severity: "Low", status: "Open" },
     ],
@@ -116,7 +170,7 @@ export default function TwinDetailPage() {
 
   return (
     <div className="min-h-screen  text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-      <div className="mx-auto w-full  ">
+      <div className="mx-auto w-full  mt-10">
         {/* HEADER */}
         <div
           className="
@@ -167,7 +221,11 @@ export default function TwinDetailPage() {
                   to={`/authors/${twin.publishedBy.name.toLowerCase().replace(/\s+/g, "-")}`}
                   className="bg-blue-100/30 flex gap-2 py-1.5 sm:py-2 px-3 rounded-full items-center hover:bg-blue-200/50 transition"
                 >
-                  <img src={twin.avatar} className="h-6 w-6 rounded-full" alt={twin.publishedBy.name} />
+                  <img
+                    src={twin.avatar}
+                    className="h-6 w-6 rounded-full"
+                    alt={twin.publishedBy.name}
+                  />
                   <span className="font-medium text-sm">{twin.publishedBy.name}</span>
                   <BadgeCheck size={20} fill="#3084F1" color="#fff" />
                 </Link>
@@ -178,8 +236,18 @@ export default function TwinDetailPage() {
                 <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
                   {[
                     { key: "details" as const, label: "Details", icon: Info },
-                    { key: "comments" as const, label: "Comments", icon: MessageSquare, count: comments.length },
-                    { key: "issues" as const, label: "Issue", icon: AlertTriangle, count: issues.length },
+                    {
+                      key: "comments" as const,
+                      label: "Comments",
+                      icon: MessageSquare,
+                      count: comments.length,
+                    },
+                    {
+                      key: "issues" as const,
+                      label: "Issue",
+                      icon: AlertTriangle,
+                      count: issues.length,
+                    },
                   ].map((t) => {
                     const active = activeTab === t.key;
                     const Icon = t.icon;
@@ -215,7 +283,7 @@ export default function TwinDetailPage() {
           </div>
 
           {/* RIGHT header actions + stats (wrap on mobile) */}
-          <div className="flex flex-col gap-3 sm:gap-[10px] lg:items-end">
+          <div className="flex flex-col gap-3 sm:gap-[150px] lg:items-end h-full">
             <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-[10px]">
               <button
                 onClick={() => setIsModalOpen(true)}
@@ -233,16 +301,16 @@ export default function TwinDetailPage() {
 
             <div className="flex flex-wrap gap-2 sm:gap-[8px]">
               {[
-                {
-                  label: "Rating",
-                  value: (
-                    <span className="inline-flex items-center gap-1">
-                      <Star size={15} className="text-amber-500" /> {twin.rating}
-                    </span>
-                  ),
-                },
+                // {
+                //   label: "Rating",
+                //   value: (
+                //     <span className="inline-flex items-center gap-1">
+                //       <Star size={15} className="text-amber-500" /> {twin.rating}
+                //     </span>
+                //   ),
+                // },
                 { label: "Levels", value: twin.levels },
-                { label: "Subscribed", value: twin.subscribed },
+                // { label: "Subscribed", value: twin.subscribed },
                 { label: "Exp. Years", value: `${twin.expYears}+` },
               ].map((s) => (
                 <div
@@ -300,62 +368,58 @@ export default function TwinDetailPage() {
             )}
 
             {activeTab === "comments" && (
-              <Card title={`Comments (${comments.length})`}>
-                <ul className="divide-y divide-slate-100 dark:divide-slate-800">
-                  {comments.map((cmt) => (
-                    <li key={cmt.id} className="py-[10px]">
-                      <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
-                        {cmt.user}
-                      </div>
-                      <div className="mt-[2px] text-sm text-slate-600 dark:text-slate-300">
-                        {cmt.text}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </Card>
+              <div className="bg-white p-5 sm:p-8 rounded-2xl">
+                <Card title={`Comments (${comments.length})`}>
+                  <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+                    {comments.map((cmt) => (
+                      <li key={cmt.id} className="py-[10px]">
+                        <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
+                          {cmt.user}
+                        </div>
+                        <div className="mt-[2px] text-sm text-slate-600 dark:text-slate-300">
+                          {cmt.text}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </Card>
+              </div>
             )}
 
             {activeTab === "issues" && (
-              <Card title={`Issues (${issues.length})`}>
-                <ul className="divide-y divide-slate-100 dark:divide-slate-800">
-                  {issues.map((it) => (
-                    <li key={it.id} className="flex items-center justify-between py-[10px]">
-                      <div className="min-w-0">
-                        <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
-                          {it.id} — {it.title}
+              <div className="bg-white p-5 sm:p-8 rounded-2xl">
+                <Card title={`Issues (${issues.length})`}>
+                  <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+                    {issues.map((it) => (
+                      <li key={it.id} className="flex items-center justify-between py-[10px]">
+                        <div className="min-w-0">
+                          <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
+                            {it.id} — {it.title}
+                          </div>
+                          <div className="mt-[2px] text-[12px] text-slate-500">{it.status}</div>
                         </div>
-                        <div className="mt-[2px] text-[12px] text-slate-500">{it.status}</div>
-                      </div>
-                      <span
-                        className={`ml-3 rounded-full px-[10px] py-[3px] text-[12px] whitespace-nowrap ${
-                          it.severity === "High"
-                            ? "bg-rose-100 text-rose-700"
-                            : it.severity === "Medium"
-                            ? "bg-amber-100 text-amber-700"
-                            : "bg-emerald-100 text-emerald-700"
-                        }`}
-                      >
-                        {it.severity}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </Card>
+                        <span
+                          className={`ml-3 rounded-full px-[10px] py-[3px] text-[12px] whitespace-nowrap ${
+                            it.severity === "High"
+                              ? "bg-rose-100 text-rose-700"
+                              : it.severity === "Medium"
+                                ? "bg-amber-100 text-amber-700"
+                                : "bg-emerald-100 text-emerald-700"
+                          }`}
+                        >
+                          {it.severity}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </Card>
+              </div>
             )}
           </div>
 
           {/* RIGHT column */}
           <div className="col-span-12 space-y-4 sm:space-y-[14px] lg:col-span-6">
-            <div className="bg-white p-5 sm:p-8 rounded-2xl">
-              <Card title="About">
-                <p className="text-sm leading-[22px] text-slate-700 dark:text-slate-300">
-                  Digital Twin of a Senior Workday Integration Consultant. Trained on real-world
-                  projects across banking, retail, utilities, and global HR transformations.
-                  Continuously improved with new cases and Workday release updates.
-                </p>
-              </Card>
-
+            <div className="bg-white p-5 sm:p-8 rounded-2xl h-full">
               <Card title="Last Month Activity">
                 <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
                   <div>
@@ -407,7 +471,7 @@ export default function TwinDetailPage() {
               </Card>
 
               <Card title="Published By">
-                <div className="flex items-center gap-[10px]">
+                <div className="flex items-center gap-[10px] ">
                   <img
                     src={twin.avatar}
                     className="h-[40px] w-[40px] rounded-full"

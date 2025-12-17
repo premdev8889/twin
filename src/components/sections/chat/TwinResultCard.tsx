@@ -47,10 +47,7 @@ export default function TwinResultCard({
                 <h4 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-100">
                   {name}
                 </h4>
-                <span
-                  className="text-slate-500 text-[12px]"
-                  title="Subscribers"
-                >
+                <span className="text-slate-500 text-[12px]" title="Subscribers">
                   {subscribers}
                 </span>
               </div>
@@ -93,7 +90,16 @@ export default function TwinResultCard({
             "
           >
             <Link
-              to={`/twin/${slug}`}
+              to={`/authors/${slug}/chat`}
+              state={{
+                name,
+                avatar,
+                role,
+                summary,
+                subscribers,
+                year,
+                Scenarios,
+              }}
               className="
                 rounded-full bg-gradient-to-tr from-sky-500 to-blue-500
                 px-4 py-1.5 text-sm text-white font-medium shadow-sm
@@ -103,7 +109,8 @@ export default function TwinResultCard({
               More
             </Link>
 
-            <button
+            <Link
+              to={`/twin/${slug}`}
               className="
                 rounded-full border border-slate-200 bg-white
                 px-4 py-1.5 text-sm text-slate-700 shadow-sm
@@ -112,7 +119,7 @@ export default function TwinResultCard({
               "
             >
               Explore
-            </button>
+            </Link>
 
             <button
               className="

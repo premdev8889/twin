@@ -41,7 +41,7 @@ export default function App() {
         </div>
 
         {/* Main */}
-        <main className="px-3 sm:px-6 py-4">
+        <main className="px-3 sm:px-6 py-4 mt-8">
           <div className="mx-auto w-full ">
             <Outlet />
           </div>

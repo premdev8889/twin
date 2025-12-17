@@ -175,7 +175,7 @@ export default function Marketplace() {
                 Filters
               </button>
 
-              <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-1 flex-1">
+              <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-1 flex-1 mb-3">
                 {tabs.map((t) => {
                   const selected = active.has(t);
                   return (

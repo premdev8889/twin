@@ -1,7 +1,16 @@
 // src/pages/AuthorChat.tsx
 import { useEffect, useMemo, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import { Mic, SendHorizontal, ThumbsUp, ThumbsDown, RotateCcw, Copy, Upload, SquarePen } from "lucide-react";
+import { useParams, useSearchParams, useLocation } from "react-router-dom";
+import {
+  Mic,
+  SendHorizontal,
+  ThumbsUp,
+  ThumbsDown,
+  RotateCcw,
+  Copy,
+  Upload,
+  SquarePen,
+} from "lucide-react";
 
 export default function AuthorChat() {
   const { authorSlug } = useParams();
@@ -47,11 +56,61 @@ export default function AuthorChat() {
     setInput("");
   };
 
+  const { state } = useLocation() as {
+    state?: {
+      name: string;
+      avatar: string;
+      role: string;
+      summary: string;
+      subscribers: string;
+      year?: string;
+      Scenarios?: string;
+    };
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <div className="mx-auto max-w-5xl px-3 sm:px-6 py-4">
         {/* Top bar */}
+{/* ===== Author / Twin Detail (STATIC – no chat impact) ===== */}
+        {state && (
+          <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/60">
+            <div className="flex items-start gap-4">
+              <img
+                src={state.avatar}
+                alt={state.name}
+                className="h-16 w-16 rounded-full object-cover border border-slate-200"
+              />
 
+              <div className="flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
+                    {state.name}
+                  </h2>
+                  <span className="text-xs text-slate-500">{state.subscribers}</span>
+                </div>
+
+                <p className="text-sm text-slate-500 dark:text-slate-400">{state.role}</p>
+
+                {(state.year || state.Scenarios) && (
+                  <div className="mt-2 flex gap-2 text-xs text-slate-500">
+                    {state.year && (
+                      <span className="rounded-full border px-2 py-0.5">{state.year}</span>
+                    )}
+                    {state.Scenarios && (
+                      <span className="rounded-full border px-2 py-0.5">{state.Scenarios}</span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* FULL SUMMARY */}
+            <div className="mt-4 text-sm leading-6 text-slate-700 dark:text-slate-300">
+              {state.summary}
+            </div>
+          </div>
+        )}
         {/* Messages area */}
         <div className="min-h-[58vh] pb-[120px]">
           {" "}
@@ -117,6 +176,8 @@ export default function AuthorChat() {
             <div className="text-center text-sm text-slate-400 mt-20">Start your conversation…</div>
           )}
         </div>
+
+        
 
         {/* Input box */}
         {/* ✅ Fixed bottom input box */}
