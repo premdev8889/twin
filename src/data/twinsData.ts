@@ -1,3 +1,5 @@
+import { FileText, Mail, Rocket, Share2 } from "lucide-react";
+
 // src/data/twinsData.ts
 export type Twin = {
   slug: string;
@@ -159,6 +161,35 @@ export const twinsData: Twin[] = [
       projects: "80+ BP Programs",
       org: "Enterprise Delivery",
     },
+  },
+];
+
+
+
+export const promptCards = [
+  {
+    id: 1,
+    title: "Create a step-by-step plan",
+    description: "Create a step-by-step plan for launching a new product",
+    icon: Rocket,
+  },
+  {
+    id: 2,
+    title: "Write a polite email",
+    description: "Write a polite email to decline an invitation to a webinar",
+    icon: Mail,
+  },
+  {
+    id: 3,
+    title: "Summarize this blog",
+    description: "Summarize this blog post in a few key points",
+    icon: FileText,
+  },
+  {
+    id: 4,
+    title: "Explain blockchain",
+    description: "Explain blockchain in simple terms, assume I am a 5 YO",
+    icon: Share2,
   },
 ];
 

@@ -2,7 +2,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Mic, SendHorizontal } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import CardProduct from "../components/ui/CardProduct";
+import { promptCards } from "../data/twinsData";
+import PromptCard from "../components/ui/PromptCard";
 
 export default function Home() {
   const { authorSlug } = useParams();
@@ -54,41 +55,10 @@ export default function Home() {
   }, []);
 
   // 🔹 Twin cards data
-  const twins = [
-    {
-      avatar: "https://i.pravatar.cc/80?img=12",
-      name: "Noah Carter",
-      role: "Creative Integration Twin",
-      tags: ["Integrations", "BP Fixes"],
-      rating: "4.9",
-      scenarios: "430+",
-      subscribed: "1.3K",
-      metaRight: "12 days Ago",
-    },
-    {
-      avatar: "https://i.pravatar.cc/80?img=32",
-      name: "Jordan Blake",
-      role: "Creative BP Twin",
-      tags: ["BP Fixes", "BP Flows"],
-      rating: "4.2",
-      scenarios: "890+",
-      subscribed: "5.3K",
-      metaRight: "1 days Ago",
-    },
-    {
-      avatar: "https://i.pravatar.cc/80?img=49",
-      name: "Riley Taylor",
-      role: "Creative Studio Twin",
-      tags: ["Studio", "BP Fixes"],
-      rating: "4.1",
-      scenarios: "1520+",
-      subscribed: "88.1K",
-      metaRight: "5 days Ago",
-    },
-  ];
+  
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-6 sm:py-8">
+    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-6 sm:py-16">
       {/* 🔹 Top avatar / orb */}
       <div className="relative mx-auto mb-6 sm:mb-8 flex justify-center">
         {activeAuthor ? (
@@ -201,10 +171,16 @@ export default function Home() {
       </div>
 
       {/* 🔹 Cards grid */}
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-        {twins.map((t, i) => (
-          <CardProduct key={i} {...t} />
-        ))}
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          {promptCards.map((item) => (
+            <PromptCard
+              key={item.id}
+              title={item.title}
+              description={item.description}
+              icon={item.icon}
+            />
+          ))}
+        
       </div>
     </div>
   );

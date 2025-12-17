@@ -1,11 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import {
-  Sun, Moon, Plus, Bell, LogOut, Settings, Sparkles, Menu, X, User2,
-} from "lucide-react";
+import { Sun, Moon, Plus, Bell, LogOut, Settings, Sparkles, Menu, X, User2 } from "lucide-react";
+import LoginModal from "../sections/login/LoginModal";
 
 type Props = {
   onToggleTheme?: () => void;
-  onOpenSidebar?: () => void;  // new: logo -> sidebar drawer
+  onOpenSidebar?: () => void; // new: logo -> sidebar drawer
   theme?: "light" | "dark";
   title?: string;
   avatarUrl?: string;
@@ -18,6 +17,8 @@ export default function Navbar({
   title = "Automation",
   avatarUrl = "https://i.pravatar.cc/120?img=12",
 }: Props) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isAvatarOpen, setIsAvatarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // keep toggle menu
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -70,9 +71,7 @@ export default function Navbar({
           >
             ❄️
           </button>
-          <h1 className="text-[15px] font-semibold text-slate-800 dark:text-slate-100">
-            {title}
-          </h1>
+          <h1 className="text-[15px] font-semibold text-slate-800 dark:text-slate-100">{title}</h1>
         </div>
 
         {/* Right: keep the TOGGLE button (mobile) */}
@@ -149,15 +148,44 @@ export default function Navbar({
                 <DropdownItem icon={<Sparkles size={16} />} label="Digital Twin Studio" />
                 <DropdownItem icon={<Sparkles size={16} />} label="Twin 1" />
                 <DropdownItem icon={<Sparkles size={16} />} label="Twin 2" />
-                <div className="my-2 h-px bg-slate-100 dark:bg-slate-700/60" />
-                <DropdownItem icon={<LogOut size={16} />} label="Logout" noBadge />
+
+                {!isLoggedIn ? (
+                  <DropdownItem
+                    icon={<User2 size={16} />}
+                    label="Login"
+                    noBadge
+                    onClick={() => {
+                      setIsAvatarOpen(false);
+                      setIsLoginModalOpen(true);
+                    }}
+                  />
+                ) : (
+                  <DropdownItem
+                    icon={<LogOut size={16} />}
+                    label="Logout"
+                    noBadge
+                    onClick={() => {
+                      setIsLoggedIn(false);
+                      setIsAvatarOpen(false);
+                    }}
+                  />
+                )}
+
                 <DropdownItem icon={<Settings size={16} />} label="Setting" />
               </div>
             )}
           </div>
         </div>
       </div>
-
+      {isLoginModalOpen && (
+        <LoginModal
+          onClose={() => setIsLoginModalOpen(false)}
+          onSuccess={() => {
+            setIsLoggedIn(true);
+            setIsLoginModalOpen(false);
+          }}
+        />
+      )}
       {/* Mobile quick actions modal (TOGGLE button) */}
       {isMobileMenuOpen && (
         <MobileMenuModal
@@ -166,6 +194,9 @@ export default function Navbar({
           theme={theme}
           avatarUrl={avatarUrl}
           title={title}
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          setIsLoginModalOpen={setIsLoginModalOpen}
         />
       )}
 
@@ -191,13 +222,18 @@ function DropdownItem({
   icon,
   label,
   noBadge = false,
+  onClick,
 }: {
   icon: React.ReactNode;
   label: string;
   noBadge?: boolean;
+  onClick?: () => void;
 }) {
   return (
-    <div className="flex items-center justify-between rounded-xl px-3 py-2 text-[14px] mb-3 text-slate-700 hover:bg-blue-50 dark:text-slate-200 dark:hover:bg-slate-800/60 cursor-pointer transition">
+    <div
+      onClick={onClick}
+      className="flex items-center justify-between rounded-xl px-3 py-2 text-[14px] mb-3 text-slate-700 hover:bg-blue-50 dark:text-slate-200 dark:hover:bg-slate-800/60 cursor-pointer transition"
+    >
       <div className="flex items-center gap-2">
         {icon}
         <span>{label}</span>
@@ -218,15 +254,20 @@ function MobileMenuModal({
   theme,
   avatarUrl,
   title,
+  isLoggedIn,
+  setIsLoggedIn,
+  setIsLoginModalOpen,
 }: {
   onClose: () => void;
   onToggleTheme?: () => void;
   theme?: "light" | "dark";
   avatarUrl?: string;
   title?: string;
+  isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLoginModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const handle = (e: MouseEvent) => {
       if (cardRef.current && !cardRef.current.contains(e.target as Node)) onClose();
@@ -248,13 +289,21 @@ function MobileMenuModal({
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
-            <img src={avatarUrl} alt="me" className="size-11 rounded-full ring-1 ring-slate-200 dark:ring-slate-700" />
+            <img
+              src={avatarUrl}
+              alt="me"
+              className="size-11 rounded-full ring-1 ring-slate-200 dark:ring-slate-700"
+            />
             <div>
               <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">{title}</p>
               <p className="text-xs text-slate-500 dark:text-slate-400">Quick actions</p>
             </div>
           </div>
-          <button onClick={onClose} className="inline-flex items-center justify-center rounded-full p-2 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Close menu">
+          <button
+            onClick={onClose}
+            className="inline-flex items-center justify-center rounded-full p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+            aria-label="Close menu"
+          >
             <X size={18} />
           </button>
         </div>
@@ -264,7 +313,9 @@ function MobileMenuModal({
           <button
             onClick={onToggleTheme}
             className={`flex items-center justify-center gap-2 rounded-xl border px-3 py-2 text-sm transition dark:border-slate-700 ${
-              theme === "light" ? "bg-blue-50 border-blue-200 dark:bg-slate-800" : "bg-white dark:bg-slate-900"
+              theme === "light"
+                ? "bg-blue-50 border-blue-200 dark:bg-slate-800"
+                : "bg-white dark:bg-slate-900"
             }`}
           >
             <Sun size={16} /> Light
@@ -272,7 +323,9 @@ function MobileMenuModal({
           <button
             onClick={onToggleTheme}
             className={`flex items-center justify-center gap-2 rounded-xl border px-3 py-2 text-sm transition dark:border-slate-700 ${
-              theme === "dark" ? "bg-blue-50 border-blue-200 dark:bg-slate-800" : "bg-white dark:bg-slate-900"
+              theme === "dark"
+                ? "bg-blue-50 border-blue-200 dark:bg-slate-800"
+                : "bg-white dark:bg-slate-900"
             }`}
           >
             <Moon size={16} /> Dark
@@ -293,9 +346,28 @@ function MobileMenuModal({
           <ModalItem icon={<Sparkles size={16} />} label="Twin 2" />
           <div className="my-2 h-px bg-slate-100 dark:bg-slate-700/60" />
           <ModalItem icon={<User2 size={16} />} label="Profile" />
-          <ModalItem icon={<LogOut size={16} />} label="Logout" />
+          {!isLoggedIn ? (
+            <ModalItem
+              icon={<User2 size={16} />}
+              label="Login"
+              onClick={() => {
+                onClose();
+                setIsLoginModalOpen(true);
+              }}
+            />
+          ) : (
+            <ModalItem
+              icon={<LogOut size={16} />}
+              label="Logout"
+              onClick={() => {
+                setIsLoggedIn(false);
+                onClose();
+              }}
+            />
+          )}
         </div>
       </div>
+      
     </div>
   );
 }
@@ -315,14 +387,17 @@ function ModalItem({
   icon,
   label,
   badge,
+  onClick,
 }: {
   icon: React.ReactNode;
   label: string;
   badge?: string;
+  onClick?: () => void;
 }) {
   return (
-    <button className="w-full flex items-center justify-between rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 dark:text-slate-200 dark:hover:bg-slate-800/60 transition">
+    <button onClick={onClick} className="w-full flex items-center justify-between rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 dark:text-slate-200 dark:hover:bg-slate-800/60 transition">
       <span className="flex items-center gap-2">
+        
         {icon}
         {label}
       </span>

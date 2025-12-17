@@ -11,7 +11,8 @@ import {
   ChevronRight,
   ChevronLeft,
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link,  useLocation, useNavigate } from "react-router-dom";
+import { avtarIcon } from "../../data/authorsData";
 
 /* ---------- Types ---------- */
 type Item = {
@@ -39,11 +40,6 @@ export const subscriptionTwins = [
   },
   { id: "codewrite", title: "Codewrite Twin", avatar: "https://i.pravatar.cc/64?img=65" },
   { id: "armory3d", title: "Armory3d Twin", avatar: "https://i.pravatar.cc/64?img=10" },
-];
-export const avtarIcon = [
-  { avatarImg: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Blender_logo_no_text.svg" },
-  { avatarImg: "https://i.pravatar.cc/64?img=65" },
-  { avatarImg: "https://i.pravatar.cc/64?img=10" },
 ];
 
 /* ---------- Small UI ---------- */
@@ -73,7 +69,7 @@ export default function Sidebar() {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
-
+  const navigate = useNavigate();
   const topGroup = mobileItems.slice(0, 4);
   const bottomGroup = mobileItems.slice(4);
   const isActive = (it: Item) => (it.to ? pathname.startsWith(it.to) : it.id === "search");
@@ -138,14 +134,15 @@ export default function Sidebar() {
               ))}
             </div>
           </div>
-          <div className="mt-2 w-full rounded-2xl  p-2 dark:bg-slate-800/40">
+          <div className="mt-2 w-full rounded-2xl p-2 dark:bg-slate-800/40">
             <div className="flex flex-col items-center gap-2">
-              {avtarIcon.map((it, index) => (
+              {avtarIcon.map((it) => (
                 <img
-                  key={index}
+                  key={it.id}
                   src={it.avatarImg}
-                  alt="avatar"
-                  className="w-[30px] h-[30px] object-cover rounded-full mb-3"
+                  alt={it.name}
+                  onClick={() => navigate(`/twins/${it.id}`)}
+                  className="w-[30px] h-[30px] object-cover rounded-full mb-3 cursor-pointer hover:scale-110 transition"
                 />
               ))}
             </div>
@@ -337,7 +334,6 @@ export default function Sidebar() {
 export function MobileMenu({
   onClose,
   items,
-  twins,
   pathname,
 }: {
   onClose: () => void;

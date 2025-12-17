@@ -9,6 +9,7 @@ import TwinDetailPage from "./pages/TwinDetailPage";
 import AuthorDetail from "./pages/AuthorDetail";
 import AuthorChat from "./pages/AuthorChat";
 import Marketplace from "./pages/Marketplace";
+import Twin from "./pages/Twin";
 
 
 const router = createBrowserRouter([
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: "authors/:authorSlug", element: <AuthorDetail /> }, 
       { path: "authors/:authorSlug/chat", element: <AuthorChat /> },   
       { path: "marketplace", element: <Marketplace /> },  
+      { path: "/twins/:id", element: <Twin /> },  
     ],
   },
 ]);
