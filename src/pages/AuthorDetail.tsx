@@ -1,5 +1,8 @@
 import { BadgeCheck, Bell, ChevronDown, ExternalLink, MapPin } from "lucide-react";
 import CardProduct from "../components/ui/CardProduct";
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import PaymentModal from "../components/sections/PaymentModal";
 
 const twins = [
   {
@@ -44,12 +47,35 @@ const twins = [
   },
 ];
 
-export default function ProfileUI() {
+export default function AuthorDetail() {
+  // const { authorSlug } = useParams();
+  const { state } = useLocation() as {
+    state?: any;
+  };
+  if (!state) {
+    return <div className="p-6">Author data not found</div>;
+  }
+
+  const { avatar, name, role, subscribed } = state;
+
   const contributions = Array.from({ length: 371 }, () => Math.floor(Math.random() * 4));
 
-  const months = ["Dec","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov"];
+  const months = [
+    "Dec",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+  ];
   const days = ["Mon", "Wed", "Fri"];
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="min-h-screen ">
       {/* Profile Card */}
@@ -64,7 +90,7 @@ export default function ProfileUI() {
             <div className="flex gap-4 sm:gap-6">
               <div className="relative shrink-0">
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop"
+                  src={avatar}
                   alt="Profile"
                   className="h-24 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32 rounded-full border-4 border-white shadow-md object-cover -mt-12 sm:-mt-14"
                 />
@@ -75,12 +101,10 @@ export default function ProfileUI() {
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h1 className="text-lg sm:text-xl font-bold truncate">Noah Carter</h1>
+                  <h1 className="text-lg sm:text-xl font-bold truncate">{name}</h1>
                   <span className="text-green-500 text-2xl leading-none">•</span>
                 </div>
-                <p className="text-gray-600 text-xs sm:text-sm mt-0.5">
-                  Senior Workday Integration Architect
-                </p>
+                <p className="text-gray-600 text-xs sm:text-sm mt-0.5">{role}</p>
                 <p className="text-gray-700 text-sm mt-2 max-w-2xl">
                   I am a Senior Workday Integration Architect with 12+ years of experience.
                 </p>
@@ -90,7 +114,7 @@ export default function ProfileUI() {
                     <span className="text-blue-600">Followers</span>
                   </span>
                   <span className="bg-blue-100/40 py-1 px-3 rounded-md flex gap-2">
-                    <span className="font-semibold text-blue-600">88</span>
+                    <span className="font-semibold text-blue-600">{subscribed}</span>
                     <span className="text-blue-600">Following</span>
                   </span>
                 </div>
@@ -100,7 +124,10 @@ export default function ProfileUI() {
             {/* Right actions/badges */}
             <div className="flex md:flex-col items-stretch md:items-end gap-3 md:gap-6">
               <div className="flex items-center gap-3">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-5 py-2 rounded-xl text-sm font-semibold flex items-center gap-2">
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-5 py-2 rounded-xl text-sm font-semibold flex items-center gap-2"
+                >
                   + Follow
                 </button>
                 <button className="h-10 w-10 rounded-xl border border-gray-200 flex items-center justify-center hover:bg-gray-50 shadow">
@@ -108,11 +135,11 @@ export default function ProfileUI() {
                 </button>
               </div>
               <div className="hidden md:flex gap-2">
-                {["Badge.png","Badge2.png","Badge3.png","Badge4.png"].map((b,i)=>(
+                {["Badge.png", "Badge2.png", "Badge3.png", "Badge4.png"].map((b, i) => (
                   <img
                     key={i}
                     src={`../assets/${b}`}
-                    alt={`Badge ${i+1}`}
+                    alt={`Badge ${i + 1}`}
                     className="h-9 w-9 rounded-full object-cover ring-1 ring-white shadow"
                   />
                 ))}
@@ -121,7 +148,7 @@ export default function ProfileUI() {
           </div>
         </div>
       </div>
-
+      <PaymentModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       {/* Main Content */}
       <div className="mx-auto mt-6">
         <div className="grid grid-cols-12 gap-6 pb-5">
@@ -164,16 +191,34 @@ export default function ProfileUI() {
                   <span>London, E1 6AN, UK</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-700">
-                  <svg className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  <svg
+                    className="h-4 w-4 text-gray-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                    />
                   </svg>
                   <span>helloa.rt</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-700">
-                  <svg className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <svg
+                    className="h-4 w-4 text-gray-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
                   </svg>
                   <span>graysonforage.12@gmail.com</span>
                 </div>
@@ -196,7 +241,9 @@ export default function ProfileUI() {
                       className="flex items-center justify-between p-2.5 rounded-lg border border-gray-200  bg-black w-full sm:w-1/2"
                     >
                       <div className="flex items-center px-2">
-                        <div className="h-7 w-7 flex items-center justify-center text-white">in</div>
+                        <div className="h-7 w-7 flex items-center justify-center text-white">
+                          in
+                        </div>
                         <span className="text-sm text-white ml-2">graysonforage</span>
                       </div>
                       <ExternalLink className="h-4 w-4 text-gray-300" />
@@ -242,7 +289,9 @@ export default function ProfileUI() {
                 <div className="inline-flex gap-1 min-w-max">
                   <div className="flex flex-col justify-between text-[10px] sm:text-xs text-gray-500 pr-2">
                     {days.map((day) => (
-                      <div key={day} className="h-3 flex items-center">{day}</div>
+                      <div key={day} className="h-3 flex items-center">
+                        {day}
+                      </div>
                     ))}
                   </div>
 
@@ -259,7 +308,12 @@ export default function ProfileUI() {
                         {Array.from({ length: 7 }).map((_, dayIndex) => {
                           const index = weekIndex * 7 + dayIndex;
                           const level = contributions[index] || 0;
-                          const colors = ["bg-gray-100", "bg-green-200", "bg-green-400", "bg-green-600"];
+                          const colors = [
+                            "bg-gray-100",
+                            "bg-green-200",
+                            "bg-green-400",
+                            "bg-green-600",
+                          ];
                           return (
                             <div key={dayIndex} className={`h-3 w-3 rounded-sm ${colors[level]}`} />
                           );

@@ -131,7 +131,7 @@ export default function Marketplace() {
   };
 
   return (
-    <div className="min-h-screen  text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div className="min-h-screen  text-slate-900 dark:bg-slate-950 dark:text-slate-100 mt-10">
       {/* Layout: left grid + right filter */}
       <div className="grid grid-cols-12 gap-4">
         {/* LEFT */}
@@ -148,7 +148,7 @@ export default function Marketplace() {
                   className="w-full bg-transparent py-2 outline-none text-[15px]"
                   aria-label="Search or compose"
                 />
-                <div className="mt-3 flex items-center justify-between">
+                <div className="mt-3 flex gap-2 items-center justify-between">
                   <button
                     className="grid place-items-center rounded-full bg-slate-100 p-2 sm:p-2.5 hover:bg-slate-200 transition"
                     aria-label="Voice input"

@@ -7,6 +7,7 @@ import Sidebar, { MobileMenu, mobileItems, subscriptionTwins } from "./component
 export default function App() {
   const { theme, toggle } = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { pathname } = useLocation();
 
   // Close sidebar drawer on route change (mobile)
@@ -25,7 +26,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-100 dark:bg-slate-950 overflow-x-hidden">
       {/* Desktop fixed sidebar */}
       <div className="fixed left-0 top-0 bottom-0 z-40 w-[72px] hidden sm:block">
-        <Sidebar />
+        <Sidebar isLoggedIn={isLoggedIn}/>
       </div>
 
       {/* Content */}
@@ -37,6 +38,8 @@ export default function App() {
             theme={theme}
             onToggleTheme={toggle}
             onOpenSidebar={() => setIsSidebarOpen(true)} 
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
           />
         </div>
 

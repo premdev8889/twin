@@ -65,7 +65,7 @@ const IconWrap: React.FC<{ active?: boolean; children: React.ReactNode }> = ({
 /* =======================================================
    Desktop Sidebar: fixed rail + overlay drawer (best of both)
    ======================================================= */
-export default function Sidebar() {
+export default function Sidebar({ isLoggedIn }: { isLoggedIn: boolean }) {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
@@ -134,6 +134,7 @@ export default function Sidebar() {
               ))}
             </div>
           </div>
+          {isLoggedIn && (
           <div className="mt-2 w-full rounded-2xl p-2 dark:bg-slate-800/40">
             <div className="flex flex-col items-center gap-2">
               {avtarIcon.map((it) => (
@@ -147,6 +148,7 @@ export default function Sidebar() {
               ))}
             </div>
           </div>
+          )}
         </div>
 
         <button className="outline-none" type="button">

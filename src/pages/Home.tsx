@@ -60,7 +60,7 @@ export default function Home() {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-6 sm:py-16">
       {/* 🔹 Top avatar / orb */}
-      <div className="relative mx-auto mb-6 sm:mb-8 flex justify-center">
+      <div className="relative mx-auto  flex justify-center">
         {activeAuthor ? (
           <div className="relative">
             <img
@@ -83,7 +83,7 @@ export default function Home() {
             loading="lazy"
             src="/assets/ai.gif"
             alt="AI Orb"
-            className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
+            className="w-24 h-24 sm:w-28 sm:h-28 md:w-44 md:h-44 object-contain "
           />
         )}
       </div>
@@ -96,8 +96,8 @@ export default function Home() {
           fontSize: "clamp(24px, 4.2vw, 42px)",
         }}
       >
-        Your Creative Integration Twin
-        <br className="hidden sm:block" /> trained on real{" "}
+        Your Ai Powered Digital Twins Trained 
+        <br className="hidden sm:block" /> on real{" "}
         <span
           key={techWords[wordIndex]}
           className="text-blue-700 inline-block motion-safe:animate-none"
@@ -157,7 +157,7 @@ export default function Home() {
       </div>
 
       {/* 🔹 Cards header */}
-      <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <div className="mt-8 sm:mt-10 max-w-4xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <h3 className="text-[15px] sm:text-[16px] md:text-[17px] font-semibold">
           Let’s Explore {techWords[wordIndex]} Digital Twins
         </h3>
@@ -171,7 +171,7 @@ export default function Home() {
       </div>
 
       {/* 🔹 Cards grid */}
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="mt-4 grid grid-cols-1 max-w-4xl mx-auto sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {promptCards.map((item) => (
             <PromptCard
               key={item.id}

@@ -8,6 +8,8 @@ type Props = {
   theme?: "light" | "dark";
   title?: string;
   avatarUrl?: string;
+  isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function Navbar({
@@ -16,8 +18,9 @@ export default function Navbar({
   theme = "light",
   title = "Automation",
   avatarUrl = "https://i.pravatar.cc/120?img=12",
+  isLoggedIn,
+  setIsLoggedIn,
 }: Props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isAvatarOpen, setIsAvatarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // keep toggle menu
@@ -49,6 +52,8 @@ export default function Navbar({
     }
     return () => document.removeEventListener("keydown", onKey);
   }, [isMobileMenuOpen]);
+
+  const DEFAULT_AVATAR = "/assets/default-avatar.png";
 
   return (
     <header className="w-full relative">
@@ -132,11 +137,15 @@ export default function Navbar({
           {/* Avatar + dropdown */}
           <div className="relative" ref={dropdownRef}>
             <img
-              src={avatarUrl}
+              src={isLoggedIn ? avatarUrl : DEFAULT_AVATAR}
               alt="profile"
-              onClick={() => setIsAvatarOpen(!isAvatarOpen)}
+              onClick={(e) => {
+                e.stopPropagation(); // outside click se bachane ke liye
+                setIsAvatarOpen((prev) => !prev); // ✅ hamesha dropdown toggle
+              }}
               className="ml-1 size-9 rounded-full border border-white shadow-sm ring-1 ring-slate-200/60 dark:border-slate-800 cursor-pointer"
             />
+
             {isAvatarOpen && (
               <div
                 className="
@@ -367,7 +376,6 @@ function MobileMenuModal({
           )}
         </div>
       </div>
-      
     </div>
   );
 }
@@ -395,9 +403,11 @@ function ModalItem({
   onClick?: () => void;
 }) {
   return (
-    <button onClick={onClick} className="w-full flex items-center justify-between rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 dark:text-slate-200 dark:hover:bg-slate-800/60 transition">
+    <button
+      onClick={onClick}
+      className="w-full flex items-center justify-between rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 dark:text-slate-200 dark:hover:bg-slate-800/60 transition"
+    >
       <span className="flex items-center gap-2">
-        
         {icon}
         {label}
       </span>
