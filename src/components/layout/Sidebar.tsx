@@ -9,9 +9,8 @@ import {
   Sparkles,
   X,
   ChevronRight,
-  ChevronLeft,
 } from "lucide-react";
-import { Link,  useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { avtarIcon } from "../../data/authorsData";
 
 /* ---------- Types ---------- */
@@ -91,15 +90,29 @@ export default function Sidebar({ isLoggedIn }: { isLoggedIn: boolean }) {
     };
   }, [open]);
 
+  const hoverTimer = useRef<any>(null);
+
   return (
     <>
       {/* --- Collapsed rail (unchanged design) --- */}
       <aside
+        onMouseEnter={() => {
+          if (window.innerWidth >= 640) {
+            hoverTimer.current = setTimeout(() => {
+              setOpen(true);
+            }, 120);
+          }
+        }}
+        onMouseLeave={() => {
+          if (window.innerWidth >= 640) {
+            clearTimeout(hoverTimer.current);
+          }
+        }}
         className="
-          hidden sm:flex h-full w-[72px] flex-col items-center justify-between
-          bg-white/80 p-3 backdrop-blur dark:bg-slate-900/70
-          relative z-40
-        "
+    hidden sm:flex h-full w-[72px] flex-col items-center justify-between
+    bg-white/80 p-3 backdrop-blur dark:bg-slate-900/70
+    relative z-40
+  "
         aria-label="Sidebar"
       >
         <div className="flex flex-col items-center gap-3">
@@ -135,19 +148,19 @@ export default function Sidebar({ isLoggedIn }: { isLoggedIn: boolean }) {
             </div>
           </div>
           {isLoggedIn && (
-          <div className="mt-2 w-full rounded-2xl p-2 dark:bg-slate-800/40">
-            <div className="flex flex-col items-center gap-2">
-              {avtarIcon.map((it) => (
-                <img
-                  key={it.id}
-                  src={it.avatarImg}
-                  alt={it.name}
-                  onClick={() => navigate(`/twins/${it.id}`)}
-                  className="w-[30px] h-[30px] object-cover rounded-full mb-3 cursor-pointer hover:scale-110 transition"
-                />
-              ))}
+            <div className="mt-2 w-full rounded-2xl p-2 dark:bg-slate-800/40">
+              <div className="flex flex-col items-center gap-2">
+                {avtarIcon.map((it) => (
+                  <img
+                    key={it.id}
+                    src={it.avatarImg}
+                    alt={it.name}
+                    onClick={() => navigate(`/twins/${it.id}`)}
+                    className="w-[30px] h-[30px] object-cover rounded-full mb-3 cursor-pointer hover:scale-110 transition"
+                  />
+                ))}
+              </div>
             </div>
-          </div>
           )}
         </div>
 
@@ -166,6 +179,11 @@ export default function Sidebar({ isLoggedIn }: { isLoggedIn: boolean }) {
 
           <div
             ref={drawerRef}
+            onMouseLeave={() => {
+              if (window.innerWidth >= 640) {
+                setOpen(false);
+              }
+            }}
             role="dialog"
             aria-modal="true"
             className="
@@ -190,26 +208,7 @@ export default function Sidebar({ isLoggedIn }: { isLoggedIn: boolean }) {
                   Automation AI
                 </span>
               </div>
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={() => setOpen(false)}
-                  className="rounded-full p-2 text-slate-500 hover:bg-white/60 dark:text-slate-300 dark:hover:bg-slate-800"
-                  aria-label="Collapse"
-                  type="button"
-                  title="Collapse"
-                >
-                  <ChevronLeft size={18} />
-                </button>
-                <button
-                  onClick={() => setOpen(false)}
-                  className="rounded-full p-2 text-slate-500 hover:bg-white/60 dark:text-slate-300 dark:hover:bg-slate-800"
-                  aria-label="Close"
-                  type="button"
-                  title="Close"
-                >
-                  <X size={18} />
-                </button>
-              </div>
+              
             </div>
 
             {/* Body: same cards UI as screenshot */}
