@@ -96,9 +96,9 @@ export default function TwinResultCard({
                 avatar,
                 role,
                 summary,
-                subscribers,
-                year,
-                Scenarios,
+                // subscribers,
+                // year,
+                // Scenarios,
               }}
               className="
                 rounded-full bg-gradient-to-tr from-sky-500 to-blue-500

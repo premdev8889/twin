@@ -69,7 +69,7 @@ export default function AuthorChat() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div className="min-h-screen  text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <div className="mx-auto max-w-5xl px-3 sm:px-6 py-4">
         {/* Top bar */}
 {/* ===== Author / Twin Detail (STATIC – no chat impact) ===== */}
