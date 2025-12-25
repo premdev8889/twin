@@ -53,7 +53,7 @@ export default function Navbar({
     return () => document.removeEventListener("keydown", onKey);
   }, [isMobileMenuOpen]);
 
-  const DEFAULT_AVATAR = "/assets/default-avatar.png";
+  const DEFAULT_AVATAR = "../../assets/Default.png";
 
   return (
     <header className="w-full relative">

@@ -1,4 +1,4 @@
-import { BadgeCheck, Bookmark, ChevronsUp, Star } from "lucide-react";
+import { BadgeCheck, Bookmark, Calendar, ChevronsUp, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 type Twin = {
@@ -21,7 +21,7 @@ export default function CardProduct(props: Twin) {
     <article
       onClick={() =>
         navigate(`/authors/${authorSlug}`, {
-          state: props, // 🔥 FULL CARD DATA PASS
+          state: { type: "author", ...props }, // include type so AuthorDetail accepts it
         })
       }
       className="
@@ -65,10 +65,10 @@ export default function CardProduct(props: Twin) {
       <div className="mt-4 grid grid-cols-3 gap-3 text-center">
         <div className="bg-white p-[8px] rouded-lg">
           <div className="text-[15px] font-bold flex align-center justify-center">
-            <Star size={18} fill="#3084F1" strokeWidth={0} />
-            {props.rating}
+            
+            {props.rating}+
           </div>
-          <div className="text-[11px] text-slate-500">Rating</div>
+          <div className="text-[11px] text-slate-500">Years</div>
         </div>
         <div className="bg-white p-[8px] rouded-lg">
           <div className="text-[15px] font-bold">{props.scenarios}</div>

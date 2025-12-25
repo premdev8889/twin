@@ -115,7 +115,7 @@ if (!state || state.type !== "author") {
                 <p className="text-gray-700 text-sm mt-2 max-w-2xl">
                   I am a Senior Workday Integration Architect with 12+ years of experience.
                 </p>
-                <div className="flex flex-wrap gap-3 sm:gap-6 mt-3 text-sm">
+                {/* <div className="flex flex-wrap gap-3 sm:gap-6 mt-3 text-sm">
                   <span className="bg-blue-100/40 py-1 px-3 rounded-md flex gap-2">
                     <span className="font-semibold text-blue-600">24.3k</span>
                     <span className="text-blue-600">Followers</span>
@@ -124,22 +124,23 @@ if (!state || state.type !== "author") {
                     <span className="font-semibold text-blue-600">{subscribed}</span>
                     <span className="text-blue-600">Following</span>
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
 
             {/* Right actions/badges */}
             <div className="flex md:flex-col items-stretch md:items-end gap-3 md:gap-6">
               <div className="flex items-center gap-3">
-                <button
+                {/* <button
                   onClick={() => setIsModalOpen(true)}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-5 py-2 rounded-xl text-sm font-semibold flex items-center gap-2"
                 >
                   + Follow
-                </button>
-                <button className="h-10 w-10 rounded-xl border border-gray-200 flex items-center justify-center hover:bg-gray-50 shadow">
+                </button> */}
+                {/* <button className="h-10 w-10 rounded-xl border border-gray-200 flex items-center justify-center hover:bg-gray-50 shadow">
                   <Bell className="h-5 w-5 text-gray-600" />
-                </button>
+                </button> */}
+                <div className="h-8"></div>
               </div>
               <div className="hidden md:flex gap-2">
                 {["Badge.png", "Badge2.png", "Badge3.png", "Badge4.png"].map((b, i) => (

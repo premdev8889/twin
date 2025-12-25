@@ -1,9 +1,40 @@
 import { useEffect, useState } from "react";
-import { Mic, SendHorizontal, X } from "lucide-react";
 import FilterPanel from "../components/sections/chat/FilterPanel";
 import CardProduct from "../components/ui/CardProduct";
 
 export default function Marketplace() {
+  const filterChips = [
+    "Trending",
+    "Most Stars",
+    "Best Match",
+    "Popular",
+    "Recently Updated",
+    "Recently Created",
+  ];
+
+  const [selectedChips, setSelectedChips] = useState<Set<string>>(
+    new Set(["Trending", "Most Stars", "Best Match"])
+  );
+
+  const handleSelect = (label: string) => {
+    setSelectedChips((prev) => {
+      if (prev.has(label)) return prev;
+      const next = new Set(prev);
+      next.add(label);
+      return next;
+    });
+  };
+
+  const handleUnselect = (label: string) => {
+    setSelectedChips((prev) => {
+      if (!prev.has(label)) return prev;
+      const next = new Set(prev);
+      next.delete(label);
+      return next;
+    });
+  };
+
+  const clearAllChips = () => setSelectedChips(new Set());
   // header tabs (UI state)
   const tabs = [
     "Trending",
@@ -21,7 +52,7 @@ export default function Marketplace() {
       name: "Noah Carter",
       role: "Creative Integration Twin",
       tags: ["Integrations", "BP Fixes"],
-      rating: "4.9",
+      rating: "9",
       scenarios: "430+",
       subscribed: "1.3K",
       metaRight: "12 days Ago",
@@ -108,10 +139,7 @@ export default function Marketplace() {
     },
   ];
 
-  const [val, setVal] = useState(
-    "I want to know more about creative things and explore different ideas that can help me understand creativity better."
-  );
-  const [messages, setMessages] = useState<string[]>([]);
+
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   // lock scroll when mobile filter drawer open
@@ -123,12 +151,7 @@ export default function Marketplace() {
     };
   }, [showMobileFilters]);
 
-  const send = () => {
-    const text = val.trim();
-    if (!text) return;
-    setMessages((m) => [...m, text]);
-    setVal("");
-  };
+ 
 
   return (
     <div className="min-h-screen  text-slate-900 dark:bg-slate-950 dark:text-slate-100 mt-10">
@@ -138,20 +161,53 @@ export default function Marketplace() {
         <div className="col-span-12 lg:col-span-9">
           <div className="mx-auto w-full ">
             {/* Search / Composer */}
-
-            {/* Messages (if any) */}
-            {messages.length > 0 && (
-              <div className="space-y-3 pt-3 mb-4">
-                {messages.map((m, i) => (
+            <div className="flex  items-center gap-2 sm:gap-3 overflow-x-auto pb-1 scrollbar-hide mb-4">
+              {filterChips.map((c) => {
+                const selected = selectedChips.has(c);
+                return (
                   <div
-                    key={i}
-                    className="rounded-2xl border border-slate-200 bg-white py-3 px-4 shadow-sm dark:border-slate-700 dark:bg-slate-900/60"
+                    key={c}
+                    className={`flex items-center gap-1 rounded-full border px-3 py-1 text-sm shadow-sm whitespace-nowrap transition ${
+                      selected
+                        ? "border-sky-200 bg-sky-50 text-sky-700"
+                        : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200"
+                    }`}
                   >
-                    <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200">{m}</p>
+                    <button onClick={() => !selected && handleSelect(c)} className="outline-none">
+                      {c}
+                    </button>
+
+                    {selected && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleUnselect(c);
+                        }}
+                        className="ml-1 grid h-5 w-5 place-items-center rounded-full bg-white/70 text-slate-500 hover:bg-white dark:bg-slate-700 dark:text-slate-200"
+                        title="Remove"
+                      >
+                        ×
+                      </button>
+                    )}
                   </div>
-                ))}
-              </div>
-            )}
+                );
+              })}
+
+              {/* Clear All */}
+              <button
+                onClick={clearAllChips}
+                className={`ml-auto rounded-full border px-3 py-1 text-sm shadow-sm transition ${
+                  selectedChips.size
+                    ? "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200"
+                    : "border-slate-200 bg-white text-slate-400 dark:border-slate-800 dark:bg-slate-900/40"
+                }`}
+                disabled={selectedChips.size === 0}
+              >
+                Clear All
+              </button>
+            </div>
+            {/* Messages (if any) */}
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {twins.map((t, i) => (
                 <CardProduct key={i} {...t} />

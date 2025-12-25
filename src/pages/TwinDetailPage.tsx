@@ -275,7 +275,7 @@ export default function TwinDetailPage() {
                         {typeof t.count === "number" && (
                           <span
                             className={`ml-1 rounded-full px-2 py-[2px] text-[12px] ${
-                              active ? "bg-sky-50 text-sky-700" : "bg-slate-100 text-slate-500"
+                              active ? "bg-sky-50 text-sky-700" : "bg-sky-500 text-white"
                             }`}
                           >
                             {t.count}
@@ -322,9 +322,9 @@ export default function TwinDetailPage() {
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="inline-flex items-center gap-[8px] rounded-[12px] bg-slate-100/60 px-[12px] py-[8px] text-[12px] text-slate-700 dark:bg-slate-800/70 dark:text-slate-200"
+                  className="inline-flex items-center gap-[8px] rounded-[12px] bg-sky-600 px-[12px] py-[8px] text-[12px] text-white dark:bg-slate-800/70 dark:text-slate-200"
                 >
-                  <span className="opacity-70">{s.label}</span>
+                  <span className="">{s.label}</span>
                   <span className="font-semibold">{s.value}</span>
                 </div>
               ))}
