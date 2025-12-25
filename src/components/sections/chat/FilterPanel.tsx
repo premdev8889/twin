@@ -113,22 +113,83 @@ export default function FilterPanel({
           </div>
         </Section>
 
-        {/* Common Issues (ranges) */}
-        <Section title="Common Issues">
-          <div className="flex flex-wrap gap-2">
-            {ranges.map((t) => (
-              <Chip
-                key={t}
-                label={t}
-                selected={selectedRanges.has(t)}
-                onSelect={() => selectToSet(setSelectedRanges, t)}
-                onUnselect={() => unselectFromSet(setSelectedRanges, t)}
-              />
-            ))}
+        {/* Levels (dual-handle, no inputs) */}
+        <Section title="Scenarios">
+          <div className="mb-1 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
+            <span>0L</span>
+            <span>100L</span>
+          </div>
+
+          <div className="relative pt-6">
+            {/* bubbles for both knobs */}
+            <span
+              className="pointer-events-none absolute -top-1 -translate-x-1/2 rounded-full bg-blue-50 px-2 py-[2px] text-[10px] font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300"
+              style={{ left: `calc(${levelMin}% )` }}
+            >
+              {levelMin}L
+            </span>
+            <span
+              className="pointer-events-none absolute -top-1 -translate-x-1/2 rounded-full bg-blue-50 px-2 py-[2px] text-[10px] font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300"
+              style={{ left: `calc(${levelMax}% )` }}
+            >
+              {levelMax}L
+            </span>
+
+            {/* filled segment between min..max */}
+            <div
+              className="absolute left-0 top-1/2 h-2 w-full -translate-y-1/2 rounded-full"
+              style={
+                {
+                  background: `linear-gradient(90deg,
+                  var(--track-rest) 0%,
+                  var(--track-rest) ${levelMin}%,
+                  #3b82f6 ${levelMin}%,
+                  #3b82f6 ${levelMax}%,
+                  var(--track-rest) ${levelMax}%,
+                  var(--track-rest) 100%)`,
+                } as React.CSSProperties
+              }
+            />
+
+            {/* ruler ticks */}
+            <div
+              className="absolute left-0 right-0 top-[36px] h-[10px]"
+              style={
+                {
+                  background:
+                    "repeating-linear-gradient(to right, transparent 0 8px, var(--tick) 8px 9px)",
+                } as React.CSSProperties
+              }
+            />
+
+            {/* min handle (blue) */}
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={levelMin}
+              onChange={(e) => {
+                const v = clamp(Number(e.target.value), 0, levelMax);
+                setLevelMin(v);
+              }}
+              className="relative z-10 w-full appearance-none"
+              style={rangeStyles({ thumbColor: "#3b82f6" })}
+            />
+            {/* max handle (white) */}
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={levelMax}
+              onChange={(e) => {
+                const v = clamp(Number(e.target.value), levelMin, 100);
+                setLevelMax(v);
+              }}
+              className="absolute inset-0 z-20 w-full appearance-none"
+              style={rangeStyles({ thumbColor: "#ffffff" })}
+            />
           </div>
         </Section>
-
-        {/* Levels (dual-handle, no inputs) */}
         <Section title="Levels">
           <div className="mb-1 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
             <span>0L</span>
@@ -153,24 +214,28 @@ export default function FilterPanel({
             {/* filled segment between min..max */}
             <div
               className="absolute left-0 top-1/2 h-2 w-full -translate-y-1/2 rounded-full"
-              style={{
-                background: `linear-gradient(90deg,
+              style={
+                {
+                  background: `linear-gradient(90deg,
                   var(--track-rest) 0%,
                   var(--track-rest) ${levelMin}%,
                   #3b82f6 ${levelMin}%,
                   #3b82f6 ${levelMax}%,
                   var(--track-rest) ${levelMax}%,
                   var(--track-rest) 100%)`,
-              } as React.CSSProperties}
+                } as React.CSSProperties
+              }
             />
 
             {/* ruler ticks */}
             <div
-              className="absolute left-0 right-0 top-[36px] h-6"
-              style={{
-                background:
-                  "repeating-linear-gradient(to right, transparent 0 8px, var(--tick) 8px 9px)",
-              } as React.CSSProperties}
+              className="absolute left-0 right-0 top-[36px] h-[10px]"
+              style={
+                {
+                  background:
+                    "repeating-linear-gradient(to right, transparent 0 8px, var(--tick) 8px 9px)",
+                } as React.CSSProperties
+              }
             />
 
             {/* min handle (blue) */}
@@ -212,15 +277,17 @@ export default function FilterPanel({
           <div className="relative">
             <div
               className="absolute left-0 top-1/2 h-2 w-full -translate-y-1/2 rounded-full"
-              style={{
-                background: `linear-gradient(90deg,
+              style={
+                {
+                  background: `linear-gradient(90deg,
                   var(--track-rest) 0%,
                   var(--track-rest) ${minPrice}%,
                   #3b82f6 ${minPrice}%,
                   #3b82f6 ${maxPrice}%,
                   var(--track-rest) ${maxPrice}%,
                   var(--track-rest) 100%)`,
-              } as React.CSSProperties}
+                } as React.CSSProperties
+              }
             />
             {/* min handle */}
             <input

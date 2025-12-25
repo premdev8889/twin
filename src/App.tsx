@@ -25,7 +25,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-100 dark:bg-slate-950 overflow-x-hidden">
       {/* Desktop fixed sidebar */}
-      <div className="fixed left-0 top-0 bottom-0 z-40 w-[72px] hidden sm:block">
+      <div className="fixed left-0 top-0 bottom-0 z-20 w-[72px] hidden sm:block">
         <Sidebar isLoggedIn={isLoggedIn}/>
       </div>
 

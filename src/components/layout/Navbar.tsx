@@ -60,9 +60,8 @@ export default function Navbar({
       <div
         className="
           mx-auto flex items-center justify-between gap-3
-          border border-slate-200/70 bg-white
-          px-4 sm:px-6 py-3
-          shadow-[0_10px_40px_-20px_rgba(59,130,246,0.25)]
+           bg-white
+          pr-4 sm:pr-6 py-3
           backdrop-blur supports-[backdrop-filter]:bg-white/60
           dark:border-slate-700/60 dark:bg-slate-900/60
         "
@@ -289,7 +288,7 @@ function MobileMenuModal({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[60] sm:hidden flex items-start justify-end bg-slate-950/50 backdrop-blur-sm dark:bg-slate-950/60"
+      className="fixed inset-0 z-[9999] sm:hidden flex items-start justify-end bg-slate-950/50 backdrop-blur-sm dark:bg-slate-950/60"
     >
       <div
         ref={cardRef}

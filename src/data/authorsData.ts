@@ -2,7 +2,7 @@ export const avtarIcon = [
   {
     id: "blender",
     name: "Blender Creative Twin",
-    avatarImg: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Blender_logo_no_text.svg",
+    avatarImg: "https://i.pravatar.cc/64?img=10",
   },
   {
     id: "codewrite",
