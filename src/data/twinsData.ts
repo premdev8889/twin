@@ -7,6 +7,7 @@ export type Twin = {
   avatar: string;
   productImg: string;
   role: string;
+  summary: string;
   badges?: string[]; // e.g. ["AI Tools", "Design", "Strategy"]
   rating: number; // 4.9
   levels: string; // "3.2L"
@@ -95,6 +96,7 @@ export const twinsData: Twin[] = [
       projects: "100+ Integrations Built",
       org: "Global Enterprise Delivery",
     },
+    
   },
   {
     slug: "creative-bp-twin",
@@ -194,3 +196,8 @@ export const promptCards = [
 ];
 
 export const getTwinBySlug = (slug: string) => twinsData.find((t) => t.slug === slug);
+
+export const getTwinByAuthorSlug = (slug: string) =>
+  twinsData.find((t) =>
+    t.publishedBy?.name?.toLowerCase().replace(/\s+/g, "-") === slug
+  );

@@ -158,9 +158,7 @@ export default function AutomationChatPage() {
                   subscribers={`${t.subscribed} subscribers`}
                   year={t.expYears}
                   Scenarios={"430+ Scenarios"}
-                  summary={
-                    "Here's an expanded, richer version with more depth, tools, and a touch of creative sparkle ✨..."
-                  }
+                  summary={t.summary}
                 />
               ))}
             </section>

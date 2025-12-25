@@ -219,6 +219,13 @@ export default function TwinDetailPage() {
                 <span className="text-slate-500 text-sm">Published by:</span>
                 <Link
                   to={`/authors/${twin.publishedBy.name.toLowerCase().replace(/\s+/g, "-")}`}
+                  state={{
+                    type: "author",
+                    author: twin.publishedBy,
+                    avatar: twin.avatar,
+                    role: twin.role,
+                    subscribed: twin.subscribed,
+                  }}
                   className="bg-blue-100/30 flex gap-2 py-1.5 sm:py-2 px-3 rounded-full items-center hover:bg-blue-200/50 transition"
                 >
                   <img

@@ -1,21 +1,33 @@
 export const avtarIcon = [
   {
-    id: "blender",
+    id: "1",
     name: "Blender Creative Twin",
+    authorSlug: "noah-carter",
     avatarImg: "https://i.pravatar.cc/64?img=10",
   },
   {
-    id: "codewrite",
+    id: "2",
     name: "Codewrite Twin",
+    authorSlug: "codewrite-twin",
     avatarImg: "https://i.pravatar.cc/64?img=65",
   },
   {
-    id: "armory3d",
+    id: "3",
     name: "Armory3D Twin",
+    authorSlug: "armory3d-twin",
     avatarImg: "https://i.pravatar.cc/64?img=10",
   },
 ];
 
+export const getAvatarByIdOrSlug = (param: string | undefined) => {
+  if (!param) return undefined;
+  const slug = param.toLowerCase();
+  return avtarIcon.find((a) =>
+    a.id === param ||
+    a.authorSlug === param ||
+    a.name.toLowerCase().replace(/\s+/g, "-") === slug
+  );
+};
 // data/twins.ts
 export const AuthorCardData = [
   {

@@ -92,14 +92,9 @@ export default function TwinResultCard({
             <Link
               to={`/authors/${slug}/chat`}
               state={{
-                name,
-                avatar,
-                role,
-                summary,
-                // subscribers,
-                // year,
-                // Scenarios,
-              }}
+    type: "chat",
+    slug, 
+  }}
               className="
                 rounded-full bg-gradient-to-tr from-sky-500 to-blue-500
                 px-4 py-1.5 text-sm text-white font-medium shadow-sm

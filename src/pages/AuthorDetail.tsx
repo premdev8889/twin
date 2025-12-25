@@ -48,13 +48,20 @@ const twins = [
 ];
 
 export default function AuthorDetail() {
-  // const { authorSlug } = useParams();
+
   const { state } = useLocation() as {
-    state?: any;
+  state?: {
+    type?: "author";
+    avatar: string;
+    name: string;
+    role: string;
+    subscribed: string;
   };
-  if (!state) {
-    return <div className="p-6">Author data not found</div>;
-  }
+};
+
+if (!state || state.type !== "author") {
+  return <div className="p-6">Author data not found</div>;
+}
 
   const { avatar, name, role, subscribed } = state;
 

@@ -21,7 +21,7 @@ export default function AuthorCard({
 
   return (
     <div
-      onClick={() => navigate(`/twin/${id}`)}
+      onClick={() => navigate(`/twins/${id}`)}
       className="
         cursor-pointer
         rounded-2xl border border-slate-200 bg-white p-4 shadow-sm hover:shadow-md transition">
