@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { AuthorCardData, avtarIcon, getAvatarByIdOrSlug } from "../data/authorsData";
+import { AuthorCardData, getAvatarByIdOrSlug } from "../data/authorsData";
 import { BadgeCheck, Mic, SendHorizontal } from "lucide-react";
 import { useEffect, useState } from "react";
 import AuthorCard from "../components/ui/AuthorCard";

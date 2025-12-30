@@ -1,7 +1,7 @@
-import { BadgeCheck, Bell, ChevronDown, ExternalLink, MapPin } from "lucide-react";
+import { BadgeCheck, ChevronDown, ExternalLink, MapPin } from "lucide-react";
 import CardProduct from "../components/ui/CardProduct";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import PaymentModal from "../components/sections/PaymentModal";
 
 const twins = [
@@ -50,22 +50,24 @@ const twins = [
 export default function AuthorDetail() {
 
   const { state } = useLocation() as {
-  state?: {
-    type?: "author";
-    avatar: string;
-    name: string;
-    role: string;
-    subscribed: string;
+    state?: {
+      type?: "author";
+      avatar: string;
+      name: string;
+      role: string;
+      subscribed: string;
+    };
   };
-};
 
-if (!state || state.type !== "author") {
-  return <div className="p-6">Author data not found</div>;
-}
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { avatar, name, role, subscribed } = state;
+  const contributions = useMemo(() => Array.from({ length: 371 }, (_, i) => i % 4), []);
 
-  const contributions = Array.from({ length: 371 }, () => Math.floor(Math.random() * 4));
+  if (!state || state.type !== "author") {
+    return <div className="p-6">Author data not found</div>;
+  }
+
+  const { avatar, name, role } = state;
 
   const months = [
     "Dec",
@@ -82,7 +84,7 @@ if (!state || state.type !== "author") {
     "Nov",
   ];
   const days = ["Mon", "Wed", "Fri"];
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  
   return (
     <div className="min-h-screen ">
       {/* Profile Card */}

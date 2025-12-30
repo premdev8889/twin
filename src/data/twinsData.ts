@@ -7,7 +7,7 @@ export type Twin = {
   avatar: string;
   productImg: string;
   role: string;
-  summary: string;
+  summary?: string;
   badges?: string[]; // e.g. ["AI Tools", "Design", "Strategy"]
   rating: number; // 4.9
   levels: string; // "3.2L"

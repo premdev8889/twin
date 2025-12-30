@@ -1,17 +1,8 @@
 // src/pages/AuthorChat.tsx
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useSearchParams, useLocation } from "react-router-dom";
-import {
-  Mic,
-  SendHorizontal,
-  ThumbsUp,
-  ThumbsDown,
-  RotateCcw,
-  Copy,
-  Upload,
-  SquarePen,
-} from "lucide-react";
-import { getTwinBySlug, getTwinByAuthorSlug } from "@/data/twinsData";
+import { Mic, SendHorizontal } from "lucide-react";
+import { getTwinBySlug, getTwinByAuthorSlug } from "../data/twinsData";
 
 type Message = {
   role: "user" | "assistant";
@@ -57,7 +48,7 @@ export default function AuthorChat() {
 ${twin.modelIntroduction}
 
 🔹 What I can help you with:
-${twin.capabilities.map(c => `• ${c}`).join("\n")}
+  ${twin.capabilities.map((c: string) => `• ${c}`).join("\n")}
 
 📌 Why teams use me:
 ${twin.description}

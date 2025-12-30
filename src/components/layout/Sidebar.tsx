@@ -22,7 +22,7 @@ type Item = {
 };
 
 /* ---------- Data ---------- */
-export const mobileItems: Item[] = [
+const mobileItems: Item[] = [
   { id: "marketplace", label: "Marketplace", icon: <Handbag size={18} />, to: "/marketplace" },
   { id: "subscribe", label: "Subscribe Twins", icon: <Sparkles size={18} /> },
   { id: "search", label: "Search", icon: <Search size={18} />, to: "/search" },
@@ -31,7 +31,7 @@ export const mobileItems: Item[] = [
   { id: "chat", label: "Chat History", icon: <MessageSquare size={18} /> },
 ];
 
-export const subscriptionTwins = [
+const subscriptionTwins = [
   {
     id: "blender",
     title: "Blender Creative Twin",
@@ -112,26 +112,32 @@ export default function Sidebar({ isLoggedIn }: { isLoggedIn: boolean }) {
 
           {/* Top menu */}
           <nav className="flex flex-col gap-2 py-2 bg-blue-50 rounded-2xl px-2 mb-2 mt-4">
-            {topGroup.map((it) => (
-              <Link
-                key={it.id}
-                to={it.to || "#"}
-                className="flex items-center   rounded-xl hover:bg-blue-100/40 dark:hover:bg-slate-800/40"
-              >
-                <IconWrap >{it.icon}</IconWrap>
-
-                <span
-                  className={`
-                  text-[15px] whitespace-nowrap
-                  transition-all duration-300
-                  overflow-hidden
-                  ${open ? "opacity-100 max-w-[160px]" : "opacity-0 max-w-0"}
-                `}
+            {topGroup.map((it) => {
+              const active = isActive(it);
+              return (
+                <Link
+                  key={it.id}
+                  to={it.to || "#"}
+                  className={[
+                    "flex items-center rounded-xl",
+                    active ? "ring-1 ring-blue-200" : "hover:bg-blue-100/40 dark:hover:bg-slate-800/40",
+                  ].join(" ")}
                 >
-                  {it.label}
-                </span>
-              </Link>
-            ))}
+                  <IconWrap active={active}>{it.icon}</IconWrap>
+
+                  <span
+                    className={`
+                    text-[15px] whitespace-nowrap
+                    transition-all duration-300
+                    overflow-hidden
+                    ${open ? "opacity-100 max-w-[160px]" : "opacity-0 max-w-0"}
+                  `}
+                  >
+                    {it.label}
+                  </span>
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Bottom menu */}
@@ -212,16 +218,8 @@ export default function Sidebar({ isLoggedIn }: { isLoggedIn: boolean }) {
 }
 
 /* ---------- Mobile Sidebar Modal (UNCHANGED) ---------- */
-export function MobileMenu({
-  onClose,
-  items,
-  pathname,
-}: {
-  onClose: () => void;
-  items: Item[];
-  twins: { id: string; title: string; avatar: string }[];
-  pathname: string;
-}) {
+export function MobileMenu({ onClose }: { onClose: () => void }) {
+  const { pathname } = useLocation();
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -270,53 +268,77 @@ export function MobileMenu({
         {/* Cards: top group */}
         <div className="mt-3 space-y-3">
           <div className="space-y-2 bg-white rounded-[22px]">
-            {items.slice(0, 4).map((it) => {
+            {mobileItems.slice(0, 4).map((it) => {
               const active = it.to ? pathname.startsWith(it.to) : it.id === "search";
-              const Card: any = it.to ? Link : "button";
-              return (
-                <Card
-                  key={it.id}
-                  to={it.to}
-                  className={[
-                    "flex items-center justify-between w-[100%] rounded-[18px] px-4 py-3",
-                    "bg-white",
-                    "dark:bg-slate-900",
-                    active ? "ring-1 ring-blue-200" : "",
-                  ].join(" ")}
-                >
-                  <span className={["flex items-center gap-3 text-[15px] text-slate-700 dark:text-slate-200",active
-                          ? "bg-gradient-to-tr from-blue-500 to-cyan-400 text-white"
-                          : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
-                      ].join(" ")}>
-                    <span
-                      className=
-                        "grid place-items-center size-9 rounded-xl"
-                       
-                    >
-                      {it.icon}
-                    </span>
-                    {it.label}
-                  </span>
-                  {active ? (
-                    <span className="h-8 min-w-[120px] rounded-[14px] bg-gradient-to-tr from-blue-500 to-cyan-400 text-white grid place-items-center text-sm shadow-[0_10px_30px_rgba(59,130,246,.35)]">
+              if (it.to) {
+                return (
+                  <Link
+                    key={it.id}
+                    to={it.to}
+                    className={[
+                      "flex items-center justify-between w-[100%] rounded-[18px] px-4 py-3",
+                      "bg-white",
+                      "dark:bg-slate-900",
+                      active ? "ring-1 ring-blue-200" : "",
+                    ].join(" ")}
+                  >
+                    <span className={["flex items-center gap-3 text-[15px] text-slate-700 dark:text-slate-200", active
+                            ? "bg-gradient-to-tr from-blue-500 to-cyan-400 text-white"
+                            : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
+                        ].join(" ")}>
+                      <span className="grid place-items-center size-9 rounded-xl">{it.icon}</span>
                       {it.label}
                     </span>
-                  ) : (
-                    <ChevronRight size={18} className="text-slate-300" />
-                  )}
-                </Card>
+                    {active ? (
+                      <span className="h-8 min-w-[120px] rounded-[14px] bg-gradient-to-tr from-blue-500 to-cyan-400 text-white grid place-items-center text-sm shadow-[0_10px_30px_rgba(59,130,246,.35)]">
+                        {it.label}
+                      </span>
+                    ) : (
+                      <ChevronRight size={18} className="text-slate-300" />
+                    )}
+                  </Link>
+                );
+              }
+
+              return (
+                <button
+                  key={it.id}
+                  className="flex items-center justify-between w-[100%] rounded-[18px] px-4 py-3 bg-white dark:bg-slate-900"
+                >
+                  <span className="flex items-center gap-3 text-[15px] text-slate-700 dark:text-slate-200">
+                    <span className="grid place-items-center size-9 rounded-xl">{it.icon}</span>
+                    {it.label}
+                  </span>
+                  <ChevronRight size={18} className="text-slate-300" />
+                </button>
               );
             })}
           </div>
 
           {/* Bottom group */}
           <div className="space-y-2 bg-white rounded-[22px]">
-            {items.slice(4).map((it) => {
-              const Card: any = it.to ? Link : "button";
+            {mobileItems.slice(4).map((it) => {
+              if (it.to) {
+                return (
+                  <Link
+                    key={it.id}
+                    to={it.to}
+                    className="flex items-center justify-between w-[100%] px-4 py-3 dark:bg-slate-900"
+                  >
+                    <span className="flex items-center gap-3 text-[15px] text-slate-700 dark:text-slate-200">
+                      <span className="grid place-items-center size-9 rounded-xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                        {it.icon}
+                      </span>
+                      {it.label}
+                    </span>
+                    <ChevronRight size={18} className="text-slate-300" />
+                  </Link>
+                );
+              }
+
               return (
-                <Card
+                <button
                   key={it.id}
-                  to={it.to}
                   className="flex items-center justify-between w-[100%] px-4 py-3 dark:bg-slate-900"
                 >
                   <span className="flex items-center gap-3 text-[15px] text-slate-700 dark:text-slate-200">
@@ -326,7 +348,7 @@ export function MobileMenu({
                     {it.label}
                   </span>
                   <ChevronRight size={18} className="text-slate-300" />
-                </Card>
+                </button>
               );
             })}
           </div>

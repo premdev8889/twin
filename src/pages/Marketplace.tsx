@@ -35,110 +35,99 @@ export default function Marketplace() {
   };
 
   const clearAllChips = () => setSelectedChips(new Set());
-  // header tabs (UI state)
-  const tabs = [
-    "Trending",
-    "Most Stars",
-    "Best Match",
-    "Popular",
-    "Recently Updated",
-    "Recently Created",
-  ];
-  const [active, setActive] = useState(new Set<string>(["Trending", "Most Stars", "Best Match"]));
+  // header tabs (UI state) - currently unused
 
   const twins = [
     {
       avatar: "https://i.pravatar.cc/80?img=12",
       name: "Noah Carter",
       role: "Creative Integration Twin",
-      tags: ["Integrations", "BP Fixes"],
-      rating: "9",
-      scenarios: "430+",
-      subscribed: "1.3K",
+      rating: "4.2",
+      metaLeft: "3.2L",
+      metaMid: "10+ years",
+      scenarios: "430+ Scenarios",
+      tags: ["AI Tools", "Design", "Strategy", "Design", "Content", "+3"],
       metaRight: "12 days Ago",
     },
     {
       avatar: "https://i.pravatar.cc/80?img=32",
       name: "Jordan Blake",
       role: "Creative BP Twin",
-      tags: ["BP Fixes", "BP Flows"],
       rating: "4.2",
-      scenarios: "890+",
-      subscribed: "5.3K",
-      metaRight: "1 days Ago",
+      metaLeft: "3.2L",
+      metaMid: "10+ years",
+      scenarios: "430+ Scenarios",
+      tags: ["AI Tools", "Design", "Strategy", "Design", "Content", "+3"],
+      metaRight: "12 days Ago",
     },
     {
       avatar: "https://i.pravatar.cc/80?img=49",
       name: "Riley Taylor",
       role: "Creative Studio Twin",
-      tags: ["Studio", "BP Fixes"],
-      rating: "4.1",
-      scenarios: "1520+",
-      subscribed: "88.1K",
-      metaRight: "5 days Ago",
+      rating: "4.2",
+      metaLeft: "3.2L",
+      metaMid: "10+ years",
+      scenarios: "430+ Scenarios",
+      tags: ["AI Tools", "Design", "Strategy", "Design", "Content", "+3"],
+      metaRight: "12 days Ago",
     },
     {
       avatar: "https://i.pravatar.cc/80?img=12",
       name: "Noah Carter",
       role: "Creative Integration Twin",
-      tags: ["Integrations", "BP Fixes"],
-      rating: "4.9",
-      scenarios: "430+",
-      subscribed: "1.3K",
+      rating: "4.2",
+      metaLeft: "3.2L",
+      metaMid: "10+ years",
+      scenarios: "430+ Scenarios",
+      tags: ["AI Tools", "Design", "Strategy", "Design", "Content", "+3"],
       metaRight: "12 days Ago",
     },
     {
       avatar: "https://i.pravatar.cc/80?img=32",
       name: "Jordan Blake",
       role: "Creative BP Twin",
-      tags: ["BP Fixes", "BP Flows"],
       rating: "4.2",
-      scenarios: "890+",
-      subscribed: "5.3K",
-      metaRight: "1 days Ago",
+      metaLeft: "3.2L",
+      metaMid: "10+ years",
+      scenarios: "430+ Scenarios",
+      tags: ["AI Tools", "Design", "Strategy", "Design", "Content", "+3"],
+      metaRight: "12 days Ago",
     },
     {
       avatar: "https://i.pravatar.cc/80?img=49",
       name: "Riley Taylor",
       role: "Creative Studio Twin",
-      tags: ["Studio", "BP Fixes"],
-      rating: "4.1",
-      scenarios: "1520+",
-      subscribed: "88.1K",
-      metaRight: "5 days Ago",
+      rating: "4.2",
+      metaLeft: "3.2L",
+      metaMid: "10+ years",
+      scenarios: "430+ Scenarios",
+      tags: ["AI Tools", "Design", "Strategy", "Design", "Content", "+3"],
+      metaRight: "12 days Ago",
     },
     {
       avatar: "https://i.pravatar.cc/80?img=12",
       name: "Noah Carter",
       role: "Creative Integration Twin",
-      tags: ["Integrations", "BP Fixes"],
-      rating: "4.9",
-      scenarios: "430+",
-      subscribed: "1.3K",
+      rating: "4.2",
+      metaLeft: "3.2L",
+      metaMid: "10+ years",
+      scenarios: "430+ Scenarios",
+      tags: ["AI Tools", "Design", "Strategy", "Design", "Content", "+3"],
       metaRight: "12 days Ago",
     },
     {
       avatar: "https://i.pravatar.cc/80?img=32",
       name: "Jordan Blake",
       role: "Creative BP Twin",
-      tags: ["BP Fixes", "BP Flows"],
       rating: "4.2",
-      scenarios: "890+",
-      subscribed: "5.3K",
-      metaRight: "1 days Ago",
+      metaLeft: "3.2L",
+      metaMid: "10+ years",
+      scenarios: "430+ Scenarios",
+      tags: ["AI Tools", "Design", "Strategy", "Design", "Content", "+3"],
+      metaRight: "12 days Ago",
     },
-    {
-      avatar: "https://i.pravatar.cc/80?img=49",
-      name: "Riley Taylor",
-      role: "Creative Studio Twin",
-      tags: ["Studio", "BP Fixes"],
-      rating: "4.1",
-      scenarios: "1520+",
-      subscribed: "88.1K",
-      metaRight: "5 days Ago",
-    },
+    
   ];
-
 
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
@@ -150,8 +139,6 @@ export default function Marketplace() {
       document.body.style.overflow = prev;
     };
   }, [showMobileFilters]);
-
- 
 
   return (
     <div className="min-h-screen  text-slate-900 dark:bg-slate-950 dark:text-slate-100 mt-10">
@@ -207,8 +194,8 @@ export default function Marketplace() {
               </button>
             </div>
             {/* Messages (if any) */}
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4">
               {twins.map((t, i) => (
                 <CardProduct key={i} {...t} />
               ))}

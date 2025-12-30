@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 type Props = {
   onReset?: () => void;
@@ -26,15 +26,12 @@ export default function FilterPanel({
 }: Props) {
   const modules = ["Integrations", "Core HCM", "Payroll", "Reporting"];
   const issuePool = ["Integrations", "Core HCM", "Payroll", "Reporting"];
-  const ranges = useMemo(
-    () => ["0 - 5", "5 - 10", "10 - 15", "15 - 20", "20 - 25", "25 - 30", "30 - 35"],
-    []
-  );
+  // (kept as placeholder for future use)
 
   // --- selections ---
   const [selectedModules, setSelectedModules] = useState(new Set(modules));
   const [selectedIssues, setSelectedIssues] = useState(new Set(["Integrations", "Core HCM"]));
-  const [selectedRanges, setSelectedRanges] = useState(new Set<string>());
+  
 
   // --- Levels: dual-handle (no inputs) ---
   const [levelMin, setLevelMin] = useState<number>(clamp(initialLevelMin, 0, initialLevelMax));
@@ -48,7 +45,6 @@ export default function FilterPanel({
   const resetAll = () => {
     setSelectedModules(new Set(modules));
     setSelectedIssues(new Set(["Integrations", "Core HCM"]));
-    setSelectedRanges(new Set());
     setLevelMin(clamp(initialLevelMin, 0, initialLevelMax));
     setLevelMax(clamp(initialLevelMax, initialLevelMin, 100));
     setMinPrice(clamp(initialMinPrice, 0, initialMaxPrice));
@@ -56,10 +52,13 @@ export default function FilterPanel({
     onReset?.();
   };
 
-  const selectToSet = (setter: any, v: string) =>
-    setter((prev: Set<string>) => (prev.has(v) ? prev : new Set(prev).add(v)));
-  const unselectFromSet = (setter: any, v: string) =>
-    setter((prev: Set<string>) => {
+  const selectToSet = (setter: React.Dispatch<React.SetStateAction<Set<string>>>, v: string) =>
+    setter((prev) => (prev.has(v) ? prev : new Set(prev).add(v)));
+  const unselectFromSet = (
+    setter: React.Dispatch<React.SetStateAction<Set<string>>>,
+    v: string
+  ) =>
+    setter((prev) => {
       if (!prev.has(v)) return prev;
       const n = new Set(prev);
       n.delete(v);
@@ -114,7 +113,7 @@ export default function FilterPanel({
         </Section>
 
         {/* Levels (dual-handle, no inputs) */}
-        <Section title="Scenarios">
+        <Section title="Levels">
           <div className="mb-1 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
             <span>0L</span>
             <span>100L</span>
@@ -440,12 +439,13 @@ function rangeStyles({
   thumbColor?: string;
   ring?: string;
 }): React.CSSProperties {
-  return {
+  const css: React.CSSProperties & Record<string, string> = {
     height: 32,
     background: "transparent",
     WebkitAppearance: "none",
     outline: "none",
-    ["--thumb" as any]: thumbColor,
-    ["--ring" as any]: ring,
-  } as React.CSSProperties;
+  } as React.CSSProperties & Record<string, string>;
+  css["--thumb"] = thumbColor;
+  css["--ring"] = ring;
+  return css as React.CSSProperties;
 }

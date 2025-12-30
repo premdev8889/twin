@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useTheme } from "./hooks/useTheme";
 import Navbar from "./components/layout/Navbar";
-import Sidebar, { MobileMenu, mobileItems, subscriptionTwins } from "./components/layout/Sidebar";
+import Sidebar, { MobileMenu } from "./components/layout/Sidebar";
 
 export default function App() {
   const { theme, toggle } = useTheme();
@@ -53,12 +53,7 @@ export default function App() {
 
       {/* Mobile Sidebar Drawer */}
       {isSidebarOpen && (
-        <MobileMenu
-          onClose={() => setIsSidebarOpen(false)}
-          items={mobileItems}
-          twins={subscriptionTwins}
-          pathname={pathname}
-        />
+        <MobileMenu onClose={() => setIsSidebarOpen(false)} />
       )}
     </div>
   );
