@@ -23,12 +23,11 @@ export default function Home() {
 
   // 🔹 Rotating placeholder text
   const placeholders = [
-    "Fix PECI error — Provide RCA...",
-    "Create interview-ready use cases for Integrations...",
-    "Generate test cases for Job Change BP...",
-    "Review Studio integration logs...",
-    "Train my twin with new scenarios...",
-  ];
+  "Fix Workday PECI errors",
+  "Resolve Workday integration issues",
+  "Investigate payroll mismatches",
+  "Troubleshoot Salesforce integration failures",
+];
   const [pi, setPi] = useState(0);
   const [query, setQuery] = useState("");
 

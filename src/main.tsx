@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       { path: "twin/:slug", element: <TwinDetailPage /> },
       { path: "authors/:authorSlug", element: <AuthorDetail /> }, 
       { path: "authors/:authorSlug/chat", element: <AuthorChat /> },   
-      { path: "marketplace", element: <Marketplace /> },  
+      { path: "FindTwin", element: <Marketplace /> },  
       { path: "twins/:id", element: <Twin /> }, 
     ],
   },

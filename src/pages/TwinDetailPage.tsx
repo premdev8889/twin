@@ -51,7 +51,7 @@ export default function TwinDetailPage() {
   const twin = slug ? getTwinBySlug(slug) : undefined;
 
   // -------- Tabs state + demo data --------
-  const [activeTab, setActiveTab] = useState<"details" | "comments" | "issues">("details");
+  const [activeTab, setActiveTab] = useState<"Overview" | "Reviews & Feedback">("Overview");
 
   const comments = useMemo(
     () => [
@@ -242,16 +242,11 @@ export default function TwinDetailPage() {
               <div className="mt-3 sm:mt-[14px] border-b border-slate-200">
                 <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
                   {[
-                    { key: "details" as const, label: "Details", icon: Info },
+                    { key: "Overview" as const, label: "Overview", icon: Info },
+
                     {
-                      key: "comments" as const,
-                      label: "Comments",
-                      icon: MessageSquare,
-                      count: comments.length,
-                    },
-                    {
-                      key: "issues" as const,
-                      label: "Issue",
+                      key: "Reviews & Feedback" as const,
+                      label: "Reviews & Feedback",
                       icon: AlertTriangle,
                       count: issues.length,
                     },
@@ -296,11 +291,9 @@ export default function TwinDetailPage() {
                 onClick={() => setIsModalOpen(true)}
                 className="h-[36px] rounded-[10px] bg-sky-600 px-[14px] text-sm font-medium text-white shadow hover:bg-sky-700 transition"
               >
-                Subscribe
+                Hire
               </button>
-              <button className="grid h-[36px] w-[36px] place-items-center rounded-full border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800/70">
-                <Bell size={18} />
-              </button>
+
               <button className="grid h-[36px] w-[36px] place-items-center rounded-full border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800/70">
                 <Bookmark size={18} />
               </button>
@@ -338,84 +331,129 @@ export default function TwinDetailPage() {
         <div className="mt-4 sm:mt-[14px] grid grid-cols-12 gap-4 sm:gap-[14px]">
           {/* LEFT column */}
           <div className="col-span-12 space-y-4 sm:space-y-[14px] lg:col-span-6">
-            {activeTab === "details" && (
-              <div className="bg-white p-5 sm:p-8 rounded-2xl">
-                <Card title="Model Introduction">
-                  <p className="text-sm leading-[22px] text-slate-700 dark:text-slate-300">
-                    {twin.modelIntroduction}
-                  </p>
-                </Card>
-
-                <Card title="Key Capabilities">
-                  <ul className="list-disc space-y-[4px] pl-[18px] text-sm leading-[22px] text-slate-700 dark:text-slate-300">
-                    {twin.capabilities.map((c) => (
-                      <li key={c}>{c}</li>
-                    ))}
+            {activeTab === "Overview" && (
+              <div className="bg-white p-5 sm:p-8 rounded-2xl space-y-6">
+                {/* Capabilities */}
+                <Card title="Capabilities">
+                  <ul className="list-disc space-y-[6px] pl-[18px] text-sm leading-[22px] text-slate-700 dark:text-slate-300">
+                    <li>
+                      Design and debug complex Workday integrations (Studio, EIB, PECI, Core
+                      Connectors)
+                    </li>
+                    <li>
+                      Perform deep Root Cause Analysis (RCA) for failed inbound and outbound flows
+                    </li>
+                    <li>Resolve security, authentication, and domain-related integration issues</li>
+                    <li>Generate test cases, validation steps, and impact analysis for releases</li>
+                    <li>Optimize performance for large-volume and scheduled integrations</li>
+                    <li>
+                      Guide best practices for error handling, retries, and logging strategies
+                    </li>
                   </ul>
                 </Card>
 
-                <Card title="Description">
+                {/* How It Thinks */}
+                <Card title="How It Thinks">
                   <p className="text-sm leading-[22px] text-slate-700 dark:text-slate-300">
-                    {twin.description}
+                    This Digital Twin follows a structured, expert-level reasoning approach similar
+                    to a senior Workday Integration consultant.
                   </p>
-                  <ul className="mt-[10px] list-disc space-y-[4px] pl-[18px] text-sm leading-[22px] text-slate-700 dark:text-slate-300">
-                    <li>End-to-end integration design</li>
-                    <li>RCA for failed inbound/outbound flows</li>
-                    <li>Security troubleshooting</li>
-                    <li>Performance optimization</li>
-                    <li>Functional-technical impact analysis</li>
-                    <li>Release readiness preparation</li>
+
+                  <ul className="mt-3 list-disc space-y-[6px] pl-[18px] text-sm leading-[22px] text-slate-700 dark:text-slate-300">
+                    <li>Analyzes logs, payloads, and error codes before suggesting solutions</li>
+                    <li>Breaks down issues into functional, technical, and security layers</li>
+                    <li>Maps symptoms to known real-world integration patterns and failures</li>
+                    <li>Validates assumptions using past project scenarios and proven fixes</li>
+                    <li>Explains the “why” behind every recommendation, not just the “what”</li>
                   </ul>
-                  <p className="mt-[10px] text-sm leading-[22px] text-slate-700 dark:text-slate-300">
-                    It incorporates real client patterns, error logs, test data, and expert-level
-                    reasoning to deliver accurate, production-safe suggestions.
+
+                  <p className="mt-3 text-sm leading-[22px] text-slate-700 dark:text-slate-300">
+                    The goal is not quick guesses, but accurate, production-safe guidance that
+                    mirrors real consultant decision-making.
+                  </p>
+                </Card>
+
+                {/* Activity & Accuracy */}
+                <Card title="Activity & Accuracy">
+                  <ul className="list-disc space-y-[6px] pl-[18px] text-sm leading-[22px] text-slate-700 dark:text-slate-300">
+                    <li>
+                      Trained on 12+ years of real Workday integration scenarios and client cases
+                    </li>
+                    <li>
+                      Handles hundreds of issue patterns including PECI, Studio, REST, and security
+                      errors
+                    </li>
+                    <li>
+                      Maintains high accuracy by referencing validated use cases and resolved
+                      incidents
+                    </li>
+                    <li>
+                      Continuously improves responses based on successful resolutions and feedback
+                    </li>
+                    <li>Designed to minimize trial-and-error and reduce time to resolution</li>
+                  </ul>
+
+                  <p className="mt-3 text-sm leading-[22px] text-slate-700 dark:text-slate-300">
+                    This ensures consistent, reliable answers that teams can confidently apply in
+                    enterprise production environments.
                   </p>
                 </Card>
               </div>
             )}
 
-            {activeTab === "comments" && (
-              <div className="bg-white p-5 sm:p-8 rounded-2xl">
-                <Card title={`Comments (${comments.length})`}>
+            {activeTab === "Reviews & Feedback" && (
+              <div className="bg-white p-5 sm:p-8 rounded-2xl space-y-6">
+                {/* Rating Summary */}
+                <Card title="Rating & Reviews">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-10 gap-6">
+                    {/* Left: Avg Rating */}
+                    <div className="flex items-center gap-4">
+                      <div className="text-[40px] font-semibold leading-none text-slate-900">
+                        {twin.rating}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1 text-amber-500">
+                          {"★★★★★".slice(0, Math.round(twin.rating))}
+                        </div>
+                        <div className="mt-1 text-sm text-slate-500">
+                          Based on {comments.length} reviews
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right: Rating Distribution */}
+                    <div className="flex-1 space-y-2">
+                      {[5, 4, 3, 2, 1].map((r) => (
+                        <div key={r} className="flex items-center gap-3">
+                          <span className="w-6 text-sm text-slate-600">{r}★</span>
+                          <div className="h-2 flex-1 rounded-full bg-slate-100 overflow-hidden">
+                            <div
+                              className="h-full bg-amber-400"
+                              style={{ width: `${r === 5 ? 62 : r === 4 ? 23 : 10}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Reviews List */}
+                <Card title={`User Reviews (${comments.length})`}>
                   <ul className="divide-y divide-slate-100 dark:divide-slate-800">
                     {comments.map((cmt) => (
-                      <li key={cmt.id} className="py-[10px]">
-                        <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
-                          {cmt.user}
-                        </div>
-                        <div className="mt-[2px] text-sm text-slate-600 dark:text-slate-300">
-                          {cmt.text}
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-              </div>
-            )}
-
-            {activeTab === "issues" && (
-              <div className="bg-white p-5 sm:p-8 rounded-2xl">
-                <Card title={`Issues (${issues.length})`}>
-                  <ul className="divide-y divide-slate-100 dark:divide-slate-800">
-                    {issues.map((it) => (
-                      <li key={it.id} className="flex items-center justify-between py-[10px]">
-                        <div className="min-w-0">
+                      <li key={cmt.id} className="py-[14px]">
+                        <div className="flex items-center justify-between">
                           <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
-                            {it.id} — {it.title}
+                            {cmt.user}
                           </div>
-                          <div className="mt-[2px] text-[12px] text-slate-500">{it.status}</div>
+                          <div className="flex items-center gap-[2px] text-amber-400 text-sm">
+                            ★★★★☆
+                          </div>
                         </div>
-                        <span
-                          className={`ml-3 rounded-full px-[10px] py-[3px] text-[12px] whitespace-nowrap ${
-                            it.severity === "High"
-                              ? "bg-rose-100 text-rose-700"
-                              : it.severity === "Medium"
-                                ? "bg-amber-100 text-amber-700"
-                                : "bg-emerald-100 text-emerald-700"
-                          }`}
-                        >
-                          {it.severity}
-                        </span>
+                        <p className="mt-[4px] text-sm text-slate-600 dark:text-slate-300">
+                          {cmt.text}
+                        </p>
                       </li>
                     ))}
                   </ul>
@@ -443,7 +481,7 @@ export default function TwinDetailPage() {
                 </div>
               </Card>
 
-              <Card title="Skills & Expertise Tags">
+              <Card title="Expertise Tags">
                 <div className="flex flex-wrap gap-[10px]">
                   {twin.skills.map((s) => (
                     <span
@@ -459,11 +497,11 @@ export default function TwinDetailPage() {
               <Card title="Metrics">
                 <ul className="divide-y divide-slate-100 dark:divide-slate-800">
                   {[
-                    ["Expertise Score", twin.metrics.expertiseScore],
-                    ["Verified Use Cases", twin.metrics.verifiedUseCases],
-                    ["Issues Resolved", twin.metrics.issuesResolved],
-                    ["Automation Success Rate", twin.metrics.automationSuccessRate],
-                    ["Client Saves", twin.metrics.clientSaves],
+                    ["Experience (Years)", twin.metrics.expertiseScore],
+                    ["Accuracy Level", twin.metrics.verifiedUseCases],
+                    ["Hired ", twin.metrics.issuesResolved],
+                    ["Scenarios", twin.metrics.automationSuccessRate],
+                    ["last Improved", twin.metrics.clientSaves],
                     ["Last Updated", `${twin.lastUpdatedDays} days ago`],
                   ].map(([k, v]) => (
                     <li

@@ -25,13 +25,12 @@ export default function FilterPanel({
   maxBoxPlaceholder = "$ - 50",
 }: Props) {
   const modules = ["Integrations", "Core HCM", "Payroll", "Reporting"];
-  const issuePool = ["Integrations", "Core HCM", "Payroll", "Reporting"];
+  const issuePool = ["3 Yrs", "5 Yrs", "7 Yrs", "10 Yrs"];
   // (kept as placeholder for future use)
 
   // --- selections ---
   const [selectedModules, setSelectedModules] = useState(new Set(modules));
   const [selectedIssues, setSelectedIssues] = useState(new Set(["Integrations", "Core HCM"]));
-  
 
   // --- Levels: dual-handle (no inputs) ---
   const [levelMin, setLevelMin] = useState<number>(clamp(initialLevelMin, 0, initialLevelMax));
@@ -40,30 +39,34 @@ export default function FilterPanel({
   // --- Price: dual-handle + inputs ---
   const [minPrice, setMinPrice] = useState<number>(clamp(initialMinPrice, 0, initialMaxPrice));
   const [maxPrice, setMaxPrice] = useState<number>(clamp(initialMaxPrice, initialMinPrice, 100));
-
+  // --- Ratings ---
+  const ratings = ["1", "2", "3", "4", "5"];
+  const [selectedRatings, setSelectedRatings] = useState<Set<string>>(new Set());
   // ✅ Reset All function (full reset)
-  const resetAll = () => {
-    setSelectedModules(new Set(modules));
-    setSelectedIssues(new Set(["Integrations", "Core HCM"]));
-    setLevelMin(clamp(initialLevelMin, 0, initialLevelMax));
-    setLevelMax(clamp(initialLevelMax, initialLevelMin, 100));
-    setMinPrice(clamp(initialMinPrice, 0, initialMaxPrice));
-    setMaxPrice(clamp(initialMaxPrice, initialMinPrice, 100));
-    onReset?.();
-  };
+   const resetAll = () => {
+  setSelectedModules(new Set(modules));
+  setSelectedIssues(new Set(["Integrations", "Core HCM"]));
+  setSelectedRatings(new Set()); // ⭐ rating reset
+  setLevelMin(clamp(initialLevelMin, 0, initialLevelMax));
+  setLevelMax(clamp(initialLevelMax, initialLevelMin, 100));
+  setMinPrice(clamp(initialMinPrice, 0, initialMaxPrice));
+  setMaxPrice(clamp(initialMaxPrice, initialMinPrice, 100));
+  onReset?.();
+};
 
   const selectToSet = (setter: React.Dispatch<React.SetStateAction<Set<string>>>, v: string) =>
     setter((prev) => (prev.has(v) ? prev : new Set(prev).add(v)));
-  const unselectFromSet = (
-    setter: React.Dispatch<React.SetStateAction<Set<string>>>,
-    v: string
-  ) =>
+  const unselectFromSet = (setter: React.Dispatch<React.SetStateAction<Set<string>>>, v: string) =>
     setter((prev) => {
       if (!prev.has(v)) return prev;
       const n = new Set(prev);
       n.delete(v);
       return n;
     });
+
+
+
+ 
 
   return (
     <aside className="lg:col-span-3 fixed right-0 top-[60px] w-[330px] bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100 px-4 py-3">
@@ -83,7 +86,7 @@ export default function FilterPanel({
         </div>
 
         {/* Module */}
-        <Section title="Module">
+        <Section title="Expertise Area">
           <div className="flex flex-wrap gap-2">
             {modules.map((m) => (
               <Chip
@@ -98,7 +101,7 @@ export default function FilterPanel({
         </Section>
 
         {/* Common Issues (selected few) */}
-        <Section title="Common Issues">
+        <Section title="Experience (Years)">
           <div className="flex flex-wrap gap-2">
             {issuePool.map((c) => (
               <Chip
@@ -112,160 +115,26 @@ export default function FilterPanel({
           </div>
         </Section>
 
-        {/* Levels (dual-handle, no inputs) */}
-        <Section title="Levels">
-          <div className="mb-1 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-            <span>0L</span>
-            <span>100L</span>
-          </div>
-
-          <div className="relative pt-6">
-            {/* bubbles for both knobs */}
-            <span
-              className="pointer-events-none absolute -top-1 -translate-x-1/2 rounded-full bg-blue-50 px-2 py-[2px] text-[10px] font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300"
-              style={{ left: `calc(${levelMin}% )` }}
-            >
-              {levelMin}L
-            </span>
-            <span
-              className="pointer-events-none absolute -top-1 -translate-x-1/2 rounded-full bg-blue-50 px-2 py-[2px] text-[10px] font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300"
-              style={{ left: `calc(${levelMax}% )` }}
-            >
-              {levelMax}L
-            </span>
-
-            {/* filled segment between min..max */}
-            <div
-              className="absolute left-0 top-1/2 h-2 w-full -translate-y-1/2 rounded-full"
-              style={
-                {
-                  background: `linear-gradient(90deg,
-                  var(--track-rest) 0%,
-                  var(--track-rest) ${levelMin}%,
-                  #3b82f6 ${levelMin}%,
-                  #3b82f6 ${levelMax}%,
-                  var(--track-rest) ${levelMax}%,
-                  var(--track-rest) 100%)`,
-                } as React.CSSProperties
-              }
-            />
-
-            {/* ruler ticks */}
-            <div
-              className="absolute left-0 right-0 top-[36px] h-[10px]"
-              style={
-                {
-                  background:
-                    "repeating-linear-gradient(to right, transparent 0 8px, var(--tick) 8px 9px)",
-                } as React.CSSProperties
-              }
-            />
-
-            {/* min handle (blue) */}
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={levelMin}
-              onChange={(e) => {
-                const v = clamp(Number(e.target.value), 0, levelMax);
-                setLevelMin(v);
-              }}
-              className="relative z-10 w-full appearance-none"
-              style={rangeStyles({ thumbColor: "#3b82f6" })}
-            />
-            {/* max handle (white) */}
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={levelMax}
-              onChange={(e) => {
-                const v = clamp(Number(e.target.value), levelMin, 100);
-                setLevelMax(v);
-              }}
-              className="absolute inset-0 z-20 w-full appearance-none"
-              style={rangeStyles({ thumbColor: "#ffffff" })}
-            />
+        {/* Rating Filter */}
+        <Section title="Rating">
+          <div className="flex flex-wrap gap-1">
+            {ratings.map((r) => (
+              <Chip
+                key={r}
+                label={`⭐ ${r}`}
+                selected={selectedRatings.has(r)}
+                onSelect={() => setSelectedRatings((prev) => new Set(prev).add(r))}
+                onUnselect={() =>
+                  setSelectedRatings((prev) => {
+                    const n = new Set(prev);
+                    n.delete(r);
+                    return n;
+                  })
+                }
+              />
+            ))}
           </div>
         </Section>
-        <Section title="Levels">
-          <div className="mb-1 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-            <span>0L</span>
-            <span>100L</span>
-          </div>
-
-          <div className="relative pt-6">
-            {/* bubbles for both knobs */}
-            <span
-              className="pointer-events-none absolute -top-1 -translate-x-1/2 rounded-full bg-blue-50 px-2 py-[2px] text-[10px] font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300"
-              style={{ left: `calc(${levelMin}% )` }}
-            >
-              {levelMin}L
-            </span>
-            <span
-              className="pointer-events-none absolute -top-1 -translate-x-1/2 rounded-full bg-blue-50 px-2 py-[2px] text-[10px] font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300"
-              style={{ left: `calc(${levelMax}% )` }}
-            >
-              {levelMax}L
-            </span>
-
-            {/* filled segment between min..max */}
-            <div
-              className="absolute left-0 top-1/2 h-2 w-full -translate-y-1/2 rounded-full"
-              style={
-                {
-                  background: `linear-gradient(90deg,
-                  var(--track-rest) 0%,
-                  var(--track-rest) ${levelMin}%,
-                  #3b82f6 ${levelMin}%,
-                  #3b82f6 ${levelMax}%,
-                  var(--track-rest) ${levelMax}%,
-                  var(--track-rest) 100%)`,
-                } as React.CSSProperties
-              }
-            />
-
-            {/* ruler ticks */}
-            <div
-              className="absolute left-0 right-0 top-[36px] h-[10px]"
-              style={
-                {
-                  background:
-                    "repeating-linear-gradient(to right, transparent 0 8px, var(--tick) 8px 9px)",
-                } as React.CSSProperties
-              }
-            />
-
-            {/* min handle (blue) */}
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={levelMin}
-              onChange={(e) => {
-                const v = clamp(Number(e.target.value), 0, levelMax);
-                setLevelMin(v);
-              }}
-              className="relative z-10 w-full appearance-none"
-              style={rangeStyles({ thumbColor: "#3b82f6" })}
-            />
-            {/* max handle (white) */}
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={levelMax}
-              onChange={(e) => {
-                const v = clamp(Number(e.target.value), levelMin, 100);
-                setLevelMax(v);
-              }}
-              className="absolute inset-0 z-20 w-full appearance-none"
-              style={rangeStyles({ thumbColor: "#ffffff" })}
-            />
-          </div>
-        </Section>
-
         {/* Price range (dual-handle + inputs) */}
         <Section title="Price range">
           <div className="mb-2 flex items-center gap-2">
@@ -322,6 +191,84 @@ export default function FilterPanel({
               placeholder={maxBoxPlaceholder}
               value={`$ ${maxPrice}`}
               onChange={(raw) => setMaxPrice(clamp(parseCurrency(raw), minPrice, 100))}
+            />
+          </div>
+        </Section>
+
+        {/* Levels (dual-handle, no inputs) */}
+        <Section title="Accuracy Level">
+          <div className="mb-1 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
+            <span>0L</span>
+            <span>100L</span>
+          </div>
+
+          <div className="relative pt-6">
+            {/* bubbles for both knobs */}
+            <span
+              className="pointer-events-none absolute -top-1 -translate-x-1/2 rounded-full bg-blue-50 px-2 py-[2px] text-[10px] font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300"
+              style={{ left: `calc(${levelMin}% )` }}
+            >
+              {levelMin}L
+            </span>
+            <span
+              className="pointer-events-none absolute -top-1 -translate-x-1/2 rounded-full bg-blue-50 px-2 py-[2px] text-[10px] font-medium text-blue-700 dark:bg-blue-500/15 dark:text-blue-300"
+              style={{ left: `calc(${levelMax}% )` }}
+            >
+              {levelMax}L
+            </span>
+
+            {/* filled segment between min..max */}
+            <div
+              className="absolute left-0 top-1/2 h-2 w-full -translate-y-1/2 rounded-full"
+              style={
+                {
+                  background: `linear-gradient(90deg,
+                  var(--track-rest) 0%,
+                  var(--track-rest) ${levelMin}%,
+                  #3b82f6 ${levelMin}%,
+                  #3b82f6 ${levelMax}%,
+                  var(--track-rest) ${levelMax}%,
+                  var(--track-rest) 100%)`,
+                } as React.CSSProperties
+              }
+            />
+
+            {/* ruler ticks */}
+            <div
+              className="absolute left-0 right-0 top-[36px] h-[10px]"
+              style={
+                {
+                  background:
+                    "repeating-linear-gradient(to right, transparent 0 8px, var(--tick) 8px 9px)",
+                } as React.CSSProperties
+              }
+            />
+
+            {/* min handle (blue) */}
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={levelMin}
+              onChange={(e) => {
+                const v = clamp(Number(e.target.value), 0, levelMax);
+                setLevelMin(v);
+              }}
+              className="relative z-10 w-full appearance-none"
+              style={rangeStyles({ thumbColor: "#3b82f6" })}
+            />
+            {/* max handle (white) */}
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={levelMax}
+              onChange={(e) => {
+                const v = clamp(Number(e.target.value), levelMin, 100);
+                setLevelMax(v);
+              }}
+              className="absolute inset-0 z-20 w-full appearance-none"
+              style={rangeStyles({ thumbColor: "#ffffff" })}
             />
           </div>
         </Section>

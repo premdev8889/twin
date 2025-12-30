@@ -19,12 +19,10 @@ export default function AutomationChatPage() {
 
   // ---- Filter Chips ----
   const filterChips = [
-    "Trending",
-    "Most Stars",
-    "Best Match",
-    "Popular",
-    "Recently Updated",
-    "Recently Created",
+    "Most Used",
+    "Highest Rated",
+    "Most Hired",
+    "Recently Improved",
   ];
 
   const [selectedChips, setSelectedChips] = useState<Set<string>>(
@@ -155,11 +153,12 @@ export default function AutomationChatPage() {
                   name={t.name}
                   avatar={t.avatar}
                   role={t.role}
+                  chip={t.chip}
                   subscribers={`${t.subscribed} subscribers`}
                   year={t.expYears}
                   Scenarios={"430+ Scenarios"}
                   summary={
-                    "Here's an expanded, richer version with more depth, tools, and a touch of creative sparkle ✨..."
+                    "Here’s an expanded, richer version with more depth, tools, and a touch of creative sparkle Here are some creative things (ideas and areas) you can explore to grow your imagination, build new skills 🌟...."
                   }
                 />
               ))}

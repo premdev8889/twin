@@ -1,4 +1,4 @@
-import { Bookmark } from "lucide-react";
+import { BadgeCheck, Bookmark } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type Props = {
@@ -7,6 +7,7 @@ type Props = {
   name: string;
   subscribers: string;
   role: string;
+  chip?: string[];
   summary: string;
   year?: string;
   Scenarios?: string;
@@ -17,8 +18,8 @@ export default function TwinResultCard({
   avatar,
   name,
   role,
+  chip,
   summary,
-  subscribers,
   year = "",
   Scenarios = "",
 }: Props) {
@@ -44,28 +45,36 @@ export default function TwinResultCard({
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <h4 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-100">
+                <h4 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-1">
                   {name}
+                  <BadgeCheck size={18} color="#fff" fill="#1C78EE" />
                 </h4>
-                <span className="text-slate-500 text-[12px]" title="Subscribers">
-                  {subscribers}
-                </span>
               </div>
               <p className="text-[13px] sm:text-[14px] text-slate-500 dark:text-slate-400">
                 {role}
               </p>
+              <div className="mt-3 flex flex-wrap gap-2 mb-2">
+                {(chip ?? []).map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-md bg-slate-100 px-3 py-1 text-[11px] text-slate-600"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
 
             {/* Year / Scenarios */}
             {(year || Scenarios) && (
               <div className="flex flex-wrap gap-2 text-[11px] sm:text-[12px] text-slate-600 dark:text-slate-400">
                 {year && (
-                  <span className="border rounded-full px-2 py-1 dark:border-slate-700">
-                    {year}
+                  <span className="border border-blue-200 bg-blue-50 rounded-full px-3 py-1 dark:border-slate-700">
+                    {year} Yrs
                   </span>
                 )}
                 {Scenarios && (
-                  <span className="border rounded-full px-2 py-1 dark:border-slate-700">
+                  <span className="border rounded-full bg-green-600 text-white px-3 shadow-sm shadow-gray-100 py-1 dark:border-slate-700">
                     {Scenarios}
                   </span>
                 )}
@@ -92,16 +101,16 @@ export default function TwinResultCard({
             <Link
               to={`/authors/${slug}/chat`}
               state={{
-    type: "chat",
-    slug, 
-  }}
+                type: "chat",
+                slug,
+              }}
               className="
                 rounded-full bg-gradient-to-tr from-sky-500 to-blue-500
                 px-4 py-1.5 text-sm text-white font-medium shadow-sm
                 hover:from-sky-600 hover:to-blue-600 transition
               "
             >
-              More
+               Ask More
             </Link>
 
             <Link
@@ -113,7 +122,7 @@ export default function TwinResultCard({
                 transition
               "
             >
-              Explore
+              View Profile
             </Link>
 
             <button

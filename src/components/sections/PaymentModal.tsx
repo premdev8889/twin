@@ -192,7 +192,7 @@ export default function PaymentModal({
                 <span className="bg-slate-100/30 min-w-8 h-8 flex justify-center items-center rounded-full">
                   3
                 </span>
-                Aliquet id purus, vitae aliquet mauris leo.
+                Cancel anytime
               </div>
             </div>
           </div>

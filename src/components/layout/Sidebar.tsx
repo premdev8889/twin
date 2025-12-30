@@ -23,7 +23,7 @@ type Item = {
 
 /* ---------- Data ---------- */
 const mobileItems: Item[] = [
-  { id: "marketplace", label: "Marketplace", icon: <Handbag size={18} />, to: "/marketplace" },
+  { id: "FindTwin", label: "Find a Twin", icon: <Handbag size={18} />, to: "/FindTwin" },
   { id: "subscribe", label: "Subscribe Twins", icon: <Sparkles size={18} /> },
   { id: "search", label: "Search", icon: <Search size={18} />, to: "/search" },
   { id: "save", label: "Save Twins", icon: <Bookmark size={18} /> },

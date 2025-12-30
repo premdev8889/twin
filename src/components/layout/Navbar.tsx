@@ -120,10 +120,23 @@ export default function Navbar({
           </button>
 
           <button
-            className="ml-1 inline-flex size-9 items-center justify-center rounded-full border border-slate-200 bg-blue-200/60 text-slate-700 hover:bg-white dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-200"
-            title="New"
+            className="group relative ml-1 inline-flex size-9 items-center justify-center
+             rounded-full border border-slate-200 bg-blue-200/60 text-slate-700
+             hover:bg-white dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-200"
+            
           >
             <Plus size={16} />
+            <span
+              className="
+      pointer-events-none absolute top-full mt-2 left-1/2 -translate-x-1/2
+      whitespace-nowrap rounded-md bg-[#1C78EE] px-3 py-1.5
+      text-[12px] text-white shadow-lg
+      opacity-0 scale-95 transition
+      group-hover:opacity-100 group-hover:scale-100
+    "
+            >
+              Create Your Digital Twin
+            </span>
           </button>
 
           <button
@@ -153,6 +166,7 @@ export default function Navbar({
                   dark:border-slate-700 dark:bg-slate-900/90
                 "
               >
+                <DropdownItem icon={<Sparkles size={16} />} label="Create Your Digital Twin" noBadge />
                 <DropdownItem icon={<Sparkles size={16} />} label="Digital Twin Studio" />
                 <DropdownItem icon={<Sparkles size={16} />} label="Twin 1" />
                 <DropdownItem icon={<Sparkles size={16} />} label="Twin 2" />
@@ -179,7 +193,7 @@ export default function Navbar({
                   />
                 )}
 
-                <DropdownItem icon={<Settings size={16} />} label="Setting" />
+                <DropdownItem icon={<Settings size={16} />} label="Setting" noBadge/>
               </div>
             )}
           </div>

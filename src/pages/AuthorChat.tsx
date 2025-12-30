@@ -37,12 +37,12 @@ export default function AuthorChat() {
 
   // ✅ Auto long assistant message when page opens
   useEffect(() => {
-  if (!twin || messages.length) return;
+    if (!twin || messages.length) return;
 
-  setMessages([
-    {
-      role: "assistant",
-      content: `
+    setMessages([
+      {
+        role: "assistant",
+        content: `
 👋 Hi, I’m ${twin.name}
 
 ${twin.modelIntroduction}
@@ -56,9 +56,9 @@ ${twin.description}
 🧠 About this Digital Twin:
 ${twin.about}
       `.trim(),
-    },
-  ]);
-}, [twin]);
+      },
+    ]);
+  }, [twin]);
   // Prefill user message if ?q exists
   useEffect(() => {
     if (initialQ) {
@@ -94,7 +94,7 @@ ${twin.about}
     <div className="min-h-screen text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <div className="mx-auto max-w-5xl px-3 sm:px-6 py-4">
         {/* ===== Twin Header ===== */}
-        <div className="mb-6 rounded-2xl border bg-white p-5 shadow-sm dark:bg-slate-900/60">
+        <div className="flex items-start justify-between mb-6 rounded-2xl border bg-white p-5 shadow-sm dark:bg-slate-900/60 fixed mx-auto w-[61rem] z-10">
           <div className="flex gap-4">
             <img src={twin.avatar} alt={twin.name} className="h-16 w-16 rounded-full border" />
 
@@ -106,8 +106,10 @@ ${twin.about}
               </p>
             </div>
           </div>
-
-          <div className="mt-4 text-sm text-slate-600 dark:text-slate-300">{twin.about}</div>
+            <button className="text-[14px] bg-[#1C78EE] text-white py-1 px-3 rounded-md">View Profile</button>
+        </div>
+        <div className="mt-[8rem] mb-4 rounded-2xl border bg-white p-5 shadow-sm  text-sm text-slate-600 dark:text-slate-300">
+          {twin.about}
         </div>
 
         {/* ===== Messages ===== */}

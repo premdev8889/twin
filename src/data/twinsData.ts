@@ -7,6 +7,7 @@ export type Twin = {
   avatar: string;
   productImg: string;
   role: string;
+  chip?: string[];
   summary?: string;
   badges?: string[]; // e.g. ["AI Tools", "Design", "Strategy"]
   rating: number; // 4.9
@@ -45,6 +46,7 @@ export const twinsData: Twin[] = [
     productImg: "../assets/vs.png",
     role: "Creative Integration Twin",
     badges: ["AI Tools", "Design", "Strategy", "Content"],
+    chip: ["Workday", "PECI", "Payroll", "Integrations "],
     rating: 4.9,
     levels: "3.2L",
     subscribed: "1.3K",
@@ -52,20 +54,7 @@ export const twinsData: Twin[] = [
     lastUpdatedDays: 12,
     interactionsLastMonth: 6345,
     activitySeries: [3, 4, 4, 5, 6, 7, 5, 6, 7, 8, 7, 9, 10, 9, 11], // simple line
-    skills: [
-      "Core HCM",
-      "Integrations",
-      "Studio",
-      "EIB",
-      "CCB",
-      "RaaS",
-      "BP",
-      "Time Tracking",
-      "RCA",
-      "Payroll PECI",
-      "API",
-      "Security",
-    ],
+    skills: ["Workday", "PECI", "Payroll", "Integrations "],
     metrics: {
       expertiseScore: 98.4,
       verifiedUseCases: 152,
@@ -104,6 +93,7 @@ export const twinsData: Twin[] = [
     avatar: "https://i.pravatar.cc/64?img=22",
     productImg: "https://i.pravatar.cc/64?img=22",
     role: "Creative BP Twin",
+    chip: ["Workday", "PECI", "Payroll", "Integrations "],
     rating: 4.8,
     levels: "2.9L",
     subscribed: "980",
@@ -111,7 +101,7 @@ export const twinsData: Twin[] = [
     lastUpdatedDays: 18,
     interactionsLastMonth: 5210,
     activitySeries: [2, 3, 3, 4, 4, 5, 4, 6, 5, 6, 6, 7, 6, 7, 8],
-    skills: ["BP", "Core HCM", "Time Tracking", "RCA"],
+    skills: ["Workday", "PECI", "Payroll", "Integrations"],
     metrics: {
       expertiseScore: 96.2,
       verifiedUseCases: 121,
@@ -137,6 +127,7 @@ export const twinsData: Twin[] = [
     avatar: "https://i.pravatar.cc/64?img=22",
     productImg: "https://i.pravatar.cc/64?img=22",
     role: "Creative BP Twin",
+    chip: ["Workday", "PECI", "Payroll", "Integrations "],
     rating: 4.8,
     levels: "2.9L",
     subscribed: "980",
@@ -144,7 +135,7 @@ export const twinsData: Twin[] = [
     lastUpdatedDays: 18,
     interactionsLastMonth: 5210,
     activitySeries: [2, 3, 3, 4, 4, 5, 4, 6, 5, 6, 6, 7, 6, 7, 8],
-    skills: ["BP", "Core HCM", "Time Tracking", "RCA"],
+    skills: ["Workday", "PECI", "Payroll", "Integrations "],
     metrics: {
       expertiseScore: 96.2,
       verifiedUseCases: 121,
